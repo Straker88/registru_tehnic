@@ -33,7 +33,7 @@
 
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li id="login">
+          <li ng-show="!main.isLoggedIn" id="login">
             <a href="/login">Login</a>
           </li>
           <div ng-show="main.isLoggedIn" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
