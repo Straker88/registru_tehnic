@@ -34,9 +34,9 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li id="login">
-            <a ng-show="!main.isLoggedIn" href="/login">Login</a>
+            <a ng-show="x" href="/login">Login</a>
           </li>
-          <div ng-show="main.colete" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
+          <div class="dropdown" style="float: left;margin: 8px 15px 0 0;">
             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Registre Generale
               <span class="caret"></span></button>
             <ul class="dropdown-menu">
@@ -56,20 +56,20 @@
           </div>
 
           <li>
-            <a class="active" ng-show="main.service" href="/registruService">Registru Service</a>
+            <a ng-show="x" class="active" href="/registruService">Registru Service</a>
           </li>
 
           <li>
-            <a ng-show="main.plastie" href="/registruOlive">Registru Olive</a>
+            <a ng-show="x" href="/registruOlive">Registru Olive</a>
           </li>
 
           <li>
-            <a ng-show="main.asamblare" href="/registruIte">Registru ITE</a>
+            <a ng-show="x" href="/registruIte">Registru ITE</a>
           </li>
           <li>
-            <a ng-show="main.asamblare" href="/registruRecarcasari">Registru Recarcasari</a>
+            <a ng-show="x" href="/registruRecarcasari">Registru Recarcasari</a>
           </li>
-          <div ng-show="main.authorized" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
+          <div ng-show="x" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
             <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Registre Comenzi<span
                 class="caret"></span></button>
             <ul class="dropdown-menu">
@@ -88,7 +88,7 @@
             </ul>
           </div>
 
-          <div ng-show="main.authorized" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
+          <div class="dropdown" style="float: left;margin: 8px 15px 0 0;">
             <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Raportare<span
                 class="caret"></span></button>
             <ul class="dropdown-menu">
@@ -101,32 +101,28 @@
             </ul>
           </div>
           <li>
-            <a ng-show="main.service" href="/piese">Piese</a>
+            <a ng-show="x" href="/piese">Piese</a>
           </li>
-          <div ng-show="main.isLoggedIn && main.user" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
+          <div ng-show="x" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Registre Generale
               <span class="caret"></span></button>
             <ul class="dropdown-menu">
               <li>
 
-                <a ng-show="main.isLoggedIn && !main.colete && !main.service"
-                  href="/registruServiceCabinet/{{main.username}}">Service</a>
+                <a ng-show="main.isLoggedIn" href="/registruServiceCabinet/{{main.username}}">Service</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.colete && !main.service"
-                  href="/registruRecarcasariCabinet/{{main.username}}">Recarcasari</a>
+                <a ng-show="main.isLoggedIn" href="/registruRecarcasariCabinet/{{main.username}}">Recarcasari</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.colete && !main.service"
-                  href="/registruOliveCabinet/{{main.username}}">Olive</a>
+                <a ng-show="main.isLoggedIn" href="/registruOliveCabinet/{{main.username}}">Olive</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.colete && !main.service"
-                  href="/registruIteCabinet/{{main.username}}">ITE</a>
+                <a ng-show="main.isLoggedIn" href="/registruIteCabinet/{{main.username}}">ITE</a>
               </li>
             </ul>
           </div>
-          <div ng-show="main.isLoggedIn && main.user" class="dropdown" style="float: left;margin-top: 8px;">
+          <div ng-show="main.isLoggedIn" class="dropdown" style="float: left;margin-top: 8px;">
             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Pacienti
               <span class="caret"></span></button>
             <ul class="dropdown-menu">
@@ -140,7 +136,7 @@
           </div>
 
           <li>
-            <a ng-show="main.authorized" href="/management">Utilizatori</a>
+            <a href="/management">Utilizatori</a>
           </li>
           <li>
             <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();">Logout</a>

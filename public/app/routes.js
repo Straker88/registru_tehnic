@@ -16,7 +16,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'regCtrl',
                 controllerAs: 'register',
-                permission: ['admin']
+                // permission: ['admin']
 
             })
 
@@ -42,7 +42,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruServiceCabinetCtrl',
                 controllerAs: 'registruServCab',
                 authenticated: true,
-                permission: ['admin', 'user']
+                // permission: ['admin', 'user']
             })
 
             .when('/registruRecarcasariCabinet/:username', {
@@ -50,7 +50,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruRecarcasariCabinetCtrl',
                 controllerAs: 'registruRecarcsariCab',
                 authenticated: true,
-                permission: ['admin', 'user']
+                // permission: ['admin', 'user']
             })
 
             .when('/registruOliveCabinet/:username', {
@@ -58,7 +58,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruOliveCabinetCtrl',
                 controllerAs: 'registruOliveCab',
                 authenticated: true,
-                permission: ['admin', 'user']
+                // permission: ['admin', 'user']
             })
 
             .when('/registruIteCabinet/:username', {
@@ -66,7 +66,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruIteCabinetCtrl',
                 controllerAs: 'registruIteCab',
                 authenticated: true,
-                permission: ['admin', 'user']
+                // permission: ['admin', 'user']
             })
 
             .when('/management', {
@@ -74,7 +74,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'managementCtrl',
                 controllerAs: 'management',
                 authenticated: true,
-                permission: ['admin']
+                // permission: ['admin']
             })
 
             .when('/edit/:id', {
@@ -82,7 +82,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'editCtrl',
                 controllerAs: 'edit',
                 authenticated: true,
-                permission: ['admin', 'service']
+                // permission: ['admin', 'service']
             })
 
             .when('/registru', {
@@ -90,31 +90,31 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruCtrl',
                 controllerAs: 'registru',
                 authenticated: true,
-                permission: ['admin', 'service']
+                // permission: ['admin', 'service']
             })
             .when('/raportareCabinete', {
                 templateUrl: 'app/views/pages/management/raportareCabinete.html',
                 authenticated: true,
-                permission: ['admin']
+                // permission: ['admin']
             })
             .when('/raportareTehnic', {
                 templateUrl: 'app/views/pages/management/raportareTehnic.html',
                 authenticated: true,
-                permission: ['admin']
+                // permission: ['admin']
             })
             .when('/registruService', {
                 templateUrl: 'app/views/pages/management/registruService.html',
                 controller: 'registruServiceCtrl',
                 controllerAs: 'registruServ',
                 authenticated: true,
-                permission: ['admin', 'service']
+                // permission: ['admin', 'service']
             })
             .when('/registruRecarcasari', {
                 templateUrl: 'app/views/pages/management/registruRecarcasari.html',
                 controller: 'registruRecarcasariCtrl',
                 controllerAs: 'registruServ',
                 authenticated: true,
-                permission: ['admin', 'asamblare']
+                // permission: ['admin', 'asamblare']
             })
 
             .when('/registruOlive', {
@@ -122,7 +122,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruOliveCtrl',
                 controllerAs: 'registruOlive',
                 authenticated: true,
-                permission: ['admin', 'plastie']
+                // permission: ['admin', 'plastie']
             })
 
             .when('/registruIte', {
@@ -130,7 +130,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruIteCtrl',
                 controllerAs: 'registruIte',
                 authenticated: true,
-                permission: ['admin', 'asamblare']
+                // permission: ['admin', 'asamblare']
             })
 
             .when('/registruLogistic_service', {
@@ -138,14 +138,14 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruLogisticServiceCtrl',
                 controllerAs: 'registruLogServ',
                 authenticated: true,
-                permission: ['admin', 'colete']
+                // permission: ['admin', 'colete']
             })
             .when('/registruLogistic_recarcasari', {
                 templateUrl: 'app/views/pages/management/registruLogistic_recarcasari.html',
                 controller: 'registruLogisticRecarcasariCtrl',
                 controllerAs: 'registruLogRecarcasari',
                 authenticated: true,
-                permission: ['admin', 'colete']
+                // permission: ['admin', 'colete']
             })
 
             .when('/registruLogistic_olive', {
@@ -153,7 +153,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruLogisticOliveCtrl',
                 controllerAs: 'registruLogOlive',
                 authenticated: true,
-                permission: ['admin', 'colete']
+                // permission: ['admin', 'colete']
             })
 
             .when('/registruLogistic_ite', {
@@ -161,7 +161,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruLogisticIteCtrl',
                 controllerAs: 'registruLogIte',
                 authenticated: true,
-                permission: ['admin', 'colete']
+                // permission: ['admin', 'colete']
             })
 
             .when('/piese', {
@@ -169,7 +169,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'registruCtrl',
                 controllerAs: 'registru',
                 authenticated: true,
-                permission: ['admin', 'service']
+                // permission: ['admin', 'service']
             })
 
             .when('/service/:id', {
@@ -210,7 +210,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'regPacientCtrl',
                 controllerAs: 'registerPac',
                 authenticated: true,
-                permission: ['user']
+                // permission: ['user']
             })
 
             .otherwise({ redirectTo: '/' });
