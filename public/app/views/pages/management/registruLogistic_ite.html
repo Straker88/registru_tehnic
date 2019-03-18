@@ -1,0 +1,98 @@
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/daterangepicker.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/js/registruLogistic_ite.js"></script>
+<script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
+
+<div class="page-header">
+    <h1 style="color: #1789ab;">Registru Logistic - Inregistrari ITE</h1>
+</div>
+
+
+<div class="jumbotron text-center" ng-show="registruLog.loading">
+    <p>Se incarca...</p>
+</div>
+<br>
+<div id="inreg" style="font-size:12px; line-height:2.3em;">
+
+    <table id="tabel" class="display" style="width:100%" ng-cloak>
+        <thead id="head2">
+            <tr>
+                <th style="width: 60px;">Nr.</th>
+                <th style="width: 60px;">Serie.</th>
+                <th>Cabinet</th>
+                <th>Inregistrat</th>
+                <th>Sosit din Cabinet</th>
+                <th>Plecat spre Service</th>
+                <th>Preluat din Service</th>
+                <th>Trimis spre Cabinet</th>
+                <th>Nume</th>
+                <th>Denumire Aparat</th>
+                <th style="width:20px;pointer-events: none;border-bottom: none;"></th>
+                <th style="width:20px;pointer-events: none;"></th>
+            </tr>
+        </thead>
+
+        <thead class="filters">
+            <tr>
+                <th class="FilterinputSearch FilterinputSearchNr">Nr.</th>
+                <th class="FilterinputSearch FilterinputSearchNr">Serie</th>
+                <th class="FilterinputSearch">Cabinet</th>
+                <th class="daterange" style="padding-top:0px;">
+                    <div class="input-prepend input-group daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
+                        <p><input class="inputDateRegistruLog btn btn-primary btn-sm" name="reportrange" id="reportrange"
+                                readonly></p>
+                    </div>
+                </th>
+                <th style="padding-top: 24px;">
+                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                        type="text" placeholder="Luna" id="pickyDate" />
+                </th>
+                <th style="padding-top: 24px;">
+                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                        type="text" placeholder="Luna" id="pickyDate1" />
+                </th>
+                <th style="padding-top: 24px;">
+                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                        type="text" placeholder="Luna" id="pickyDate2" />
+                </th>
+                <th style="padding-top: 24px;">
+                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                        type="text" placeholder="Luna" id="pickyDate3" />
+                </th>
+                <th class="FilterinputSearch">Nume - Prenume</th>
+                <th class="FilterinputSearch">Denumire Aparat</th>
+                <th style="width:20px;pointer-events: none;"></th>
+                <th style="width:20px;pointer-events: none;"></th>
+
+
+            </tr>
+        </thead>
+
+        <tbody ng-cloak>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th style="width: 60px;">Nr.</th>
+                <th style="width: 60px;">Serie</th>
+                <th>Cabinet</th>
+                <th>Inregistrat</th>
+                <th>Sosit din Cabinet</th>
+                <th>Plecat spre Service</th>
+                <th>Preluat din Service</th>
+                <th>Trimis spre Cabinet</th>
+                <th>Nume</th>
+                <th>Denumire Aparat</th>
+                <th style="width:20px;pointer-events: none;border-bottom: none;"></th>
+                <th style="width:20px;pointer-events: none;"></th>
+            </tr>
+        </tfoot>
+
+    </table>
+
+</div>
+
+<br>
+<br>

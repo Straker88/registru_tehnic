@@ -1,0 +1,60 @@
+<div style="border-bottom: none;" class="page-header">
+
+  <h1 style="display: inline-block;color:#337ab7;">Inregistrare Pacient</h1>
+
+  <br>
+
+  <form name="regPacForm" ng-submit="registerPac.regPacient(regData, regPacForm.$valid);">
+
+    <div style="margin-top: 20px;" class="row">
+      <div class="col-sm-12">
+        <div style="width:30%;float: left;margin-right: 10px;">
+          <label for="Nume">Nume / Prenume Pacient: <span style="color:#f00;">*</span> </label>
+          <input type="text" class="form-control" maxlength="26" name="nume" placeholder="-" ng-model="registerPac.regData.nume"
+            autocomplete="off">
+        </div>
+
+        <div style="width:30%;" class="regPacForm">
+          <label for="Telefon">Telefon: <span style="color:#f00;">*</span> </label>
+          <input type="text" class="form-control" maxlength="26" name="telefon" placeholder="-" ng-model="registerPac.regData.telefon"
+            autocomplete="off">
+        </div>
+
+        <div style="width:30%;" class="regPacForm">
+          <label for="CNP">CNP: <span style="color:#f00;">*</span> </label>
+          <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type="number" class="form-control" maxlength="13" name="cnp" placeholder="-" ng-model="registerPac.regData.cnp"
+            autocomplete="off">
+        </div>
+
+
+        <div style="width:100%;margin: 20px 0;float: left;">
+          <label for="Adresa">Adresa: <span style="color:#f00;">*</span></label>
+          <input maxlength="70" type="text" class="form-control" name="adresa" placeholder="-" ng-model="registerPac.regData.adresa"
+            autocomplete="off">
+        </div>
+
+        <p style="float:left;color:#5cb85c;margin-top:30px;box-shadow: 1px 1px 10px #eee;padding: 10px;width:
+        100%;text-align: center;">Dupa
+          inregistrarea pacientului
+          se pot modifica adresa si nr. telefon din Profilul Pacientului folosind butonul : <b>Detalii Pacient</b>.</p>
+
+      </div>
+    </div>
+    <button style="float: right;clear: both;margin-bottom: 90px;" ng-disabled="registerPac.disabled" class="btn btn-info btn-sm no-print"
+      type="submit">Inregistreaza Pacient</button>
+
+  </form>
+
+  <button ng-click="existent()" ng-show="registerPac.checked" style="float: right;margin: 0 10px;" class="btn btn-danger btn-sm no-print">Mergi
+    la Profil Pacient inregistrat</button>
+
+
+  <div class="row show-hide-message no-print" ng-show="registerPac.errorMsg">
+    <div style="max-width: 35%" id="regPacAlert" class="alert-danger">{{ registerPac.errorMsg }}</div>
+  </div>
+</div>
+
+<div class="row show-hide-message no-print" ng-show="registerPac.successMsg">
+  <div style="max-width: 35%" id="regPacAlert" class="alert-success">{{ registerPac.successMsg }}</div>
+</div>

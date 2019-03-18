@@ -1,0 +1,53 @@
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/daterangepicker.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/js/profilCab.js"></script>
+<script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
+
+<div class="page-header">
+
+    <h1 style="color: #1789ab;">Pacientii cabinetului : {{ main.username }}</h1>
+</div>
+
+<div class="jumbotron text-center" ng-show="registru.loading">
+    <p style="color: #1789ab;">Se incarca...</p>
+</div>
+
+<br>
+
+<div style="margin-bottom:150px;" id="inreg">
+
+    <table id="tabel" class="display" style="font-size:12px;">
+        <thead>
+            <tr>
+                <th>Data Inregistrare</th>
+                <th>Nume Pacient</th>
+                <th style="width:75px;pointer-events: none;border-bottom: none;"></th>
+            </tr>
+        </thead>
+        <thead class="filters" id="head2">
+            <th class="daterange_cab">
+                <div class="input-prepend input-group_cab daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
+                    <p><input class=" btn btn-primary btn-sm" name="reportrange" id="reportrange" readonly></p>
+                </div>
+            </th>
+
+            <th class="FilterinputSearch">Nume Pacient</th>
+            <th></th>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th>Data Inregistrare</th>
+                <th>Nume Pacient</th>
+                <th style="width:75px;pointer-events: none;"></th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>

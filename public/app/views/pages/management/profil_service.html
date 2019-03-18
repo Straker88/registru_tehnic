@@ -1,0 +1,82 @@
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/daterangepicker.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
+<script type="text/javascript" src="assets/js/profilServ.js"></script>
+
+
+<div class="page-header">
+    <h1 style="color: #1789ab;">Inregistrarile cabinetului : {{ main.username }}</h1>
+</div>
+
+<div class="jumbotron text-center" ng-show="registru.loading">
+    <p style="color: #1789ab;">Se incarca...</p>
+</div>
+
+<br>
+
+<div style="margin-bottom:150px;" id="inreg">
+
+    <table id="tabel" class="display" style="width:100%;font-size:12px;">
+        <thead id="head2">
+            <tr>
+                <th style="width: 60px;">Nr.</th>
+                <th>Data Inregistrare</th>
+                <th>Nume Pacient</th>
+                <th>Denumire Aparat </th>
+                <th>Defectiune Reclamata</th>
+                <th>Data Intrat Service</th>
+                <th>Data Finalizat Reparatie</th>
+                <th>Data Iesit Service</th>
+                <th style="width:75px;pointer-events: none;;border-bottom: none;"></th>
+            </tr>
+        </thead>
+        <thead class="filters">
+            <th class="FilterinputSearch FilterinputSearchNr">Nr.</th>
+            <th class="daterange">
+                <div class="input-prepend input-group daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
+                    <p><input class="inputDateProfilService btn btn-primary btn-sm" name="reportrange" id="reportrange"
+                            readonly></p>
+                </div>
+            </th>
+
+            <th class="FilterinputSearch">Nume Pacient</th>
+            <th class="FilterinputSearch">Denumire Aparat </th>
+            <th class="FilterinputSearch">Defectiune Reclamata</th>
+            <th style="padding-top: 24px;">
+                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 145px;text-align: center;"
+                    type="text" placeholder="Luna" id="pickyDate" />
+            </th>
+            <th style="padding-top: 24px;">
+                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 145px;text-align: center;"
+                    type="text" placeholder="Luna" id="pickyDate1" />
+            </th>
+            <th style="padding-top: 24px;">
+                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 145px;text-align: center;"
+                    type="text" placeholder="Luna" id="pickyDate2" />
+            </th>
+            <th></th>
+
+        </thead>
+
+
+        <tbody>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th>Nr.</th>
+                <th>Data Inregistrare</th>
+                <th>Nume Pacient</th>
+                <th>Denumire Aparat </th>
+                <th>Defectiune Reclamata</th>
+                <th>Data Intrat Service</th>
+                <th>Data Finalizat Reparatie</th>
+                <th>Data Iesit Service</th>
+                <th style="width:75px;pointer-events: none;"></th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>

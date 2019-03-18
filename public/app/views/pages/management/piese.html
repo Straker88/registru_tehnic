@@ -1,0 +1,66 @@
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/js/registru_piese.js"></script>
+
+<script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
+<script>
+    function doPrint() {
+        window.print();
+    }
+
+</script>
+<div class="page-header">
+    <h1 style="color: #1789ab;" class="hidden-print">Registru Piese Inlocuite Service</h1>
+</div>
+
+
+<br>
+<div style="font-size:12px; line-height:2.3em;">
+
+    <table id="tabel_piese" class="display piese" style="width:100%" ng-cloak>
+        <thead id="head2" class="hidden-print">
+            <tr>
+                <th>Nr. Comanda</th>
+                <th>Finalizat Reparatie</th>
+                <th>Cabinet</th>
+                <th>Piese Inlocuite</th>
+                <th>Cod Componente</th>
+            </tr>
+        </thead>
+
+        <thead class="filters hidden-print">
+            <tr>
+                <th class="FilterinputSearch hidden-print">Nr. Comanda</th>
+                <th style="padding-top: 0px;" class="hidden-print">
+                    <input class="btn btn-primary btn-sm luna" style="margin-top: 15px;;max-width: 145px;text-align: center;"
+                        type="text" placeholder="Luna" id="pickyDate" />
+                </th>
+
+                <th class="FilterinputSearch hidden-print">Cabinet</th>
+                <th class="FilterinputSearch hidden-print">Piese Inlocuite</th>
+                <th class="FilterinputSearch hidden-print">Cod Componente</th>
+
+
+            </tr>
+        </thead>
+
+        <tbody ng-cloak>
+        </tbody>
+
+        <tfoot class="hidden-print">
+            <tr>
+                <th>Nr. Comanda</th>
+                <th>Finalizat Reparatie</th>
+                <th>Cabinet</th>
+                <th>Piese Inlocuite</th>
+                <th>Cod Componente</th>
+            </tr>
+        </tfoot>
+
+    </table>
+
+</div>
+<button onClick="doPrint()" style="float: right;clear: both;" class="btn btn-info btn-sm hidden-print">Printeaza</button>
+
+<br>
+<br>

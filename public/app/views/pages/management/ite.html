@@ -1,0 +1,493 @@
+<script>
+    $(
+        function () {
+            $("[id^=submit]").bind('keyup', function () {
+                $('#submit-holder' + this.id.match(/\d+$/)[0]).submit();
+            });
+        }
+    );
+    $(
+        function () {
+            $("[id^=time]").one("click", function () {
+                var time = new moment().format('DD/MM/YYYY');
+                $('#time-holder' + this.id.match(/\d+$/)[0]).val(time);
+            });
+        }
+    );
+
+    $(
+        function () {
+            $("[id^=service]").one("click", function () {
+                var time = new moment().format('DD/MM/YYYY');
+                $('#service-holder' + this.id.match(/\d+$/)[0]).val(time);
+            });
+        }
+    );
+
+    function doPrint() {
+        window.print();
+    }
+
+</script>
+
+
+<div class="page-header">
+    <img class="visible-print-block" style="float:right;" src="/assets/img/clarfon-logo.jpg">
+    <h1 style="color:#337ab7;">Fisa Comanda ITE Clarfon </h1>
+    <span class="visible-print-block" style="clear:both;margin-left: 10px;font-size:14px;">Operator de date cu caracter
+        personal
+        nr. 23594
+    </span>
+
+    <hr class="visible-print-block">
+
+    <h3 class="no-print" style="color:#337ab7;clear: both;">Pacient:
+        <span class="" style="color:#337ab7;">
+            <input style="border: none;" ng-model="Nume" readonly>
+        </span>
+
+    </h3>
+
+    <a class="btn btn-info btn-sm hidden-print" style="float:right;" ng-click="Back()">Pagina Precedenta</a>
+
+    <div class="visible-print-block">
+        <div style="clear:both;margin-top:-20px;float:right;max-width: 12%;margin-right: 109px;">
+            <span class="">Cabinet:</span>
+            <span class="" style="color:#337ab7;">
+                <input style="border: none;" ng-model="newCabinet" readonly>
+            </span>
+        </div>
+        <div style="clear:both;margin-top:-42px;float:right;max-width: 10%;">
+            <span style="max-width: 15%;" class="">Inregistrat:</span>
+            <span class="" style="color:#337ab7;">
+                <input style="border: none;" ng-model="Data_Inregistrare" readonly>
+            </span>
+        </div>
+        <div>
+            <span style="max-width: 15%;" class="">Denumire aparat(e):</span>
+            <span class="" style="color:#337ab7;">
+                <input style="border: none;" ng-model="Denumire_Aparat" readonly>
+            </span>
+        </div>
+        <div>
+            <span style="max-width: 15%;" class="">Serie aparat(e):</span>
+            <span class="" style="color:#337ab7;">
+                <input style="border: none;" ng-model="newSerie_Aparat" readonly>
+            </span>
+        </div>
+
+
+    </div>
+</div>
+<br class="hidden-print">
+
+<div class="row hidden-print">
+    <div class="col-sm-12">
+
+
+        <!-- Cabinet ------------------------------------------------------------------------>
+
+        <div class="accesorii">
+
+            <form style="max-width:120px;" class="optiuni_ite" novalidate>
+                <label>Nr. Comanda ITE:</label>
+                <input readonly class="form-control" name="nr_comanda_ite" ng-model="nr_comanda_ite" required>
+            </form>
+            <form style="max-width: 140px;" class="optiuni_ite" novalidate>
+                <label>Ureche Protezata:</label>
+                <input readonly class="form-control" name="ureche_protezata" ng-model="Ureche_Protezata" required>
+            </form>
+            <form style="float: left;
+            width: 250px;
+            text-align: center;
+            margin-bottom: 5px;
+            margin-right: 8px;"
+                novalidate>
+                <label>Vent:</label>
+                <input readonly class="form-control" name="Vent_ite" ng-model="Vent_ite" required>
+            </form>
+
+        </div>
+
+
+
+        <form style="width:15%;float:left;margin-right:10px;text-align: center;" name="editIte.data_inregistrareForm"
+            class="editPacForm" novalidate>
+            <label>Data Inregistrare:</label>
+            <input style="cursor: not-allowed;text-align: center;" class="form-control" type="text" name="data_inregistrare"
+                ng-model="Data_Inregistrare" readonly>
+        </form>
+
+        <form style="width:15%;float:left;margin-right:10px;text-align: center;" name="editIte.data_estimativaForm"
+            class="editPacForm" novalidate>
+            <label>Data Estimativa:</label>
+            <input style="cursor: not-allowed;text-align: center;" class="form-control" type="text" name="data_estimativa"
+                ng-model="Data_Estimativa" readonly>
+        </form>
+
+        <form style="width:15%;display: table;margin-right: 10px;text-align: center;" novalidate>
+            <label>Cabinet: </label>
+            <input style="cursor: not-allowed;text-align: center;" class="form-control" type="text" name="cabinet"
+                ng-model="Cabinet" readonly>
+        </form>
+
+    </div>
+</div>
+
+<div class="row hidden-print">
+    <div class="col-sm-12">
+        <form style="width:26%;display: table;float: left;margin-right: 10px;" novalidate>
+            <label>Nume Pacient:</label>
+            <input style="cursor: not-allowed;" class="form-control" type="text" name="nume" ng-model="Nume" readonly>
+        </form>
+
+        <form style="width:26%;display: table;float: left;margin-right: 10px;" class="editPacForm" novalidate>
+            <label>Telefon: </label>
+            <input style="cursor: not-allowed;" class="form-control" type="text" name="telefon" ng-model="Telefon"
+                readonly>
+        </form>
+        <div class="accesorii">
+
+            <form class="optiuni_ite" style="max-width:120px;" novalidate>
+                <label>Serie ITE:</label>
+                <input readonly class="form-control" name="Serie_ite" ng-model="Serie_ite" required>
+            </form>
+            <form class="optiuni_ite" style="max-width:103px;" novalidate>
+                <label>Carcasa:</label>
+                <input readonly class="form-control" name="Carcasa_ite" ng-model="Carcasa_ite" required>
+            </form>
+            <form class="optiuni_ite" style="max-width:90px;" novalidate>
+                <label>Culoare:</label>
+                <input readonly class="form-control" name="Culoare_Carcasa" ng-model="Culoare_Carcasa" required>
+            </form>
+            <form class="optiuni_ite" style="max-width:90px;" novalidate>
+                <label>Btn. Progr.</label>
+                <input readonly class="form-control" name="Buton_Programe" ng-model="Buton_Programe" required>
+            </form>
+            <form class="optiuni_ite" style="max-width:90px;" novalidate>
+                <label>Pot. Volum</label>
+                <input readonly class="form-control" name="Potentiometru_Volum" ng-model="Potentiometru_Volum" required>
+            </form>
+
+        </div>
+
+
+        <form style="width:50%;float:left;display: table;margin-right: 0;clear:both;" class="editPacForm" novalidate>
+            <label>Model Aparat:</label>
+            <input readonly class="form-control" type="text" name="model_aparat" ng-model="Model_Aparat" required
+                autocomplete="off">
+        </form>
+
+        <form style="width:49%;float:left;display: table;margin-right: 0;float:right;" class="editPacForm" novalidate>
+            <label>Observatii:</label>
+            <textarea style="resize: none; height: 95px;" readonly class="form-control" type="text" placeholder="Nu s-a completat la inregistrare"
+                name="observatii_ite" ng-model="Observatii_Ite" required autocomplete="off"></textarea>
+        </form>
+
+    </div>
+</div>
+
+<div class="row hidden-print">
+
+    <form id="submit1" ng-submit="editIte.updateCompletare_Cabinet(newCompletare_Cabinet, editIte.completare_cabinetForm.completare_cabinet.$valid)"
+        class="col-md-12" name="editIte.completare_cabinetForm" novalidate>
+        <label>Completare Cabinet: <em>Aici se pot adauga detalii sau informatii noi, dupa ce fisa a fost inregistrata.
+            </em></label>
+        <textarea ng-disabled="main.username !== Cabinet" id="submit-holder1" style="resize: none;" class="form-control"
+            type="text" name="completare_cabinet" ng-model="newCompletare_Cabinet" required autocomplete="off"></textarea>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgCompletare_Cabinet">
+            <div class="alert alert-danger">{{ editIte.errorMsgCompletare_Cabinet }}</div>
+        </div>
+
+    </form>
+</div>
+
+
+<br class="hidden-print">
+
+<div class="row hidden-print">
+    <div class="col-sm-12">
+
+        <form class="editCabinetDataForm col-md-2 col-md-offset-3" style="display: table;" name="editIte.iesit_cabinetForm"
+            ng-submit="editIte.updateIesit_Cabinet(newIesit_Cabinet, editIte.iesit_cabinetForm.iesit_cabinet.$valid)"
+            novalidate>
+            <label>Trimis catre Logistic:</label>
+            <input style="pointer-events: none;" id="time-holder1" class="form-control" type="text" name="iesit_cabinet"
+                ng-model="newIesit_Cabinet" readonly>
+
+            <button ng-show="main.username === Cabinet" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit"
+                name="iesit_cabinet" id="time1">Adauga</button>
+
+            <div class="row show-hide-message" ng-show="editIte.successMsgIesit_Cabinet">
+                <div class="alert alert-success">{{ editIte.successMsgIesit_Cabinet }}</div>
+            </div>
+
+            <div class="row show-hide-message" ng-show="editIte.errorMsgIesit_Cabinet">
+                <div class="alert alert-danger">{{ editIte.errorMsgIesit_Cabinet }}</div>
+            </div>
+        </form>
+
+
+        <form class="editCabinetDataForm col-md-2" style="display: table;" name="editIte.intrat_cabinetForm" ng-submit="editIte.updateIntrat_Cabinet(newIntrat_Cabinet, editIte.intrat_cabinetForm.intrat_cabinet.$valid)"
+            novalidate>
+            <label>Sosit de la Logistic:</label>
+            <input style="pointer-events: none;" id="time-holder2" class="form-control" type="text" name="intrat_cabinet"
+                ng-model="newIntrat_Cabinet" readonly>
+
+            <button ng-show="main.username === Cabinet" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit"
+                ng-model="newIntrat_Cabinet" name="intrat_cabinet" id="time2">Adauga</button>
+
+            <div class="row show-hide-message" ng-show="editIte.successMsgIntrat_Cabinet">
+                <div class="alert alert-success">{{ editIte.successMsgIntrat_Cabinet }}</div>
+            </div>
+
+            <div class="row show-hide-message" ng-show="editIte.errorMsgIntrat_Cabinet">
+                <div class="alert alert-danger">{{ editIte.errorMsgIntrat_Cabinet }}</div>
+            </div>
+        </form>
+        <form class="editCabinetDataForm col-md-2" style="display: table;" name="editIte.predat_pacientForm" ng-submit="editIte.updatePredat_Pacient(newPredat_Pacient, editIte.predat_pacientForm.predat_pacient.$valid)"
+            novalidate>
+            <label>Data Predare Pacient:</label>
+            <input style="pointer-events: none;" id="time-holder3" class="form-control" type="text" name="predat_pacient"
+                ng-model="newPredat_Pacient" readonly>
+
+            <button ng-show="main.username === Cabinet" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit"
+                ng-model="newPredat_Pacient" name="predat_pacient" id="time3">Adauga</button>
+
+            <div class="row show-hide-message" ng-show="editIte.successMsgPredat_Pacient">
+                <div class="alert alert-success">{{ editIte.successMsgPredat_Pacient }}</div>
+            </div>
+
+            <div class="row show-hide-message" ng-show="editIte.errorMsgPredat_Pacient">
+                <div class="alert alert-danger">{{ editIte.errorMsgPredat_Pacient }}</div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<hr class="hidden-print">
+
+<br class="hidden-print">
+
+<div class="row hidden-print">
+
+    <!-- Logistic ------------------------------------------------------------------------>
+
+    <h3 style="color:#337ab7;border-bottom: 1px solid;">Completeaza Logistic | Nume Pacient: <input style="width: 35%;border: none;"
+            ng-model="Nume" readonly></h3>
+
+    <br class="hidden-print">
+
+    <form class="logisticForm" name="editIte.log_sositForm" ng-submit="editIte.updateLog_Sosit(newLog_Sosit, editIte.log_sositForm.log_sosit.$valid)"
+        novalidate>
+        <label>Sosit din Cabinet:</label>
+        <input style="pointer-events: none;" id="time-holder4" class="form-control" type="text" name="log_sosit"
+            ng-model="newLog_Sosit" readonly>
+
+        <button ng-show="main.colete" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit" ng-model="newLog_Sosit"
+            name="log_sosit" id="time4">Adauga</button>
+
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgLog_Sosit">
+            <div class="alert alert-success">{{ editIte.successMsgLog_Sosit }}</div>
+        </div>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgLog_Sosit">
+            <div class="alert alert-danger">{{ editIte.errorMsgLog_Sosit }}</div>
+        </div>
+    </form>
+
+    <form class="logisticForm" name="editIte.log_plecatForm" ng-submit="editIte.updateLog_Plecat(newLog_Plecat, editIte.log_plecatForm.log_plecat.$valid)"
+        novalidate>
+        <label>Plecat catre Lab. Asamblare:</label>
+        <input style="pointer-events: none;" id="time-holder5" class="form-control" type="text" name="log_plecat"
+            ng-model="newLog_Plecat" readonly>
+
+        <button ng-show="main.colete" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit" ng-model="newLog_Plecat"
+            name="log_plecat" id="time5">Adauga</button>
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgLog_Plecat">
+            <div class="alert alert-success">{{ editIte.successMsgLog_Plecat }}</div>
+        </div>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgLog_Plecat">
+            <div class="alert alert-danger">{{ editIte.errorMsgLog_Plecat }}</div>
+        </div>
+    </form>
+
+    <form class="logisticForm" name="editIte.log_preluatForm" ng-submit="editIte.updateLog_Preluat(newLog_Preluat, editIte.log_preluatForm.log_preluat.$valid)"
+        novalidate>
+        <label>Preluat din Lab. Asamblare:</label>
+        <input style="pointer-events: none;" id="time-holder6" class="form-control" type="text" name="log_preluat"
+            ng-model="newLog_Preluat" readonly>
+
+        <button ng-show="main.colete" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit" ng-model="newLog_Preluat"
+            name="log_preluat" id="time6">Adauga</button>
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgLog_Preluat">
+            <div class="alert alert-success">{{ editIte.successMsgLog_Preluat }}</div>
+        </div>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgLog_Preluat">
+            <div class="alert alert-danger">{{ editIte.errorMsgLog_Preluat }}</div>
+        </div>
+    </form>
+
+    <form class="logisticForm" name="editIte.log_trimisForm" ng-submit="editIte.updateLog_Trimis(newLog_Trimis, editIte.log_trimisForm.log_trimis.$valid)"
+        novalidate>
+        <label>Trimis catre Cabinet:</label>
+        <input style="pointer-events: none;" id="time-holder7" class="form-control" type="text" name="log_trimis"
+            ng-model="newLog_Trimis" readonly>
+
+        <button ng-show="main.colete" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit" ng-model="newLog_Trimis"
+            name="log_trimis" id="time7">Adauga</button>
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgLog_Trimis">
+            <div class="alert alert-success">{{ editIte.successMsgLog_Trimis }}</div>
+        </div>
+        <div class="row show-hide-message" ng-show="editIte.errorMsgLog_Trimis">
+            <div class="alert alert-danger">{{ editIte.errorMsgLog_Trimis }}</div>
+        </div>
+    </form>
+</div>
+
+<br class="hidden-print">
+
+<!-- Asamblare ------------------------------------------------------------------------>
+
+<div class="row hidden-print">
+    <h3 class="hidden-print" style="color:#337ab7;border-bottom:1px solid;">Completeaza Laborator Asamblare |
+        Nume Pacient:
+        <input style="border: none;width: 35%;" ng-model="Nume" readonly></h3>
+
+    <br>
+
+    <form class="editCabinetDataForm col-md-2 col-md-offset-1" style="display: table;" name="editIte.asamblare_sositForm"
+        ng-submit="editIte.updateAsamblare_Sosit(newAsamblare_Sosit, editIte.asamblare_sositForm.asamblare_sosit.$valid)"
+        novalidate>
+        <label>Sosit Lab. Asamblare:</label>
+        <input style="pointer-events: none;" id="time-holder8" class="form-control" type="text" name="asamblare_sosit"
+            ng-model="newAsamblare_Sosit" readonly>
+
+        <button ng-show="main.asamblare" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit" name="asamblare_sosit"
+            id="time8">Adauga</button>
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgAsamblare_Sosit">
+            <div class="alert alert-success">{{ editIte.successMsgAsamblare_Sosit }}</div>
+        </div>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgAsamblare_Sosit">
+            <div class="alert alert-danger">{{ editIte.errorMsgAsamblare_Sosit }}</div>
+        </div>
+    </form>
+
+    <form class="editCabinetDataForm col-md-2 col-md-offset-2" style="display: table;" name="editIte.finalizat_iteForm"
+        ng-submit="editIte.updateFinalizat_Ite(newFinalizat_Ite, editIte.finalizat_iteForm.finalizat_ite.$valid)"
+        novalidate>
+        <label>Finalizat ITE:</label>
+        <input style="pointer-events: none;" id="time-holder12" class="form-control" type="text" name="finalizat_ite"
+            ng-model="newFinalizat_Ite" readonly>
+
+        <button ng-click="addExec()" ng-show="main.asamblare" ng-disabled="editIte.disabled" class="btn btn-info btn-sm"
+            type="submit" name="finalizat_ite" id="time12">Adauga</button>
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgFinalizat_Ite">
+            <div class="alert alert-success">{{ editIte.successMsgFinalizat_Ite }}</div>
+        </div>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgFinalizat_Ite">
+            <div class="alert alert-danger">{{ editIte.errorMsgFinalizat_Ite }}</div>
+        </div>
+    </form>
+
+
+
+    <form class="editCabinetDataForm col-md-2 col-md-offset-2" style="display: table;" name="editIte.asamblare_plecatForm"
+        ng-submit="editIte.updateAsamblare_Plecat(newAsamblare_Plecat, editIte.asamblare_plecatForm.asamblare_plecat.$valid)"
+        novalidate>
+        <label>Plecat catre Logistic:</label>
+        <input style="pointer-events: none;" id="time-holder9" class="form-control" type="text" name="asamblare_plecat"
+            ng-model="newAsamblare_Plecat" readonly>
+
+        <button ng-show="main.asamblare" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit" name="asamblare_plecat"
+            id="time9">Adauga</button>
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgAsamblare_Plecat">
+            <div class="alert alert-success">{{ editIte.successMsgAsamblare_Plecat }}</div>
+        </div>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgAsamblare_Plecat">
+            <div class="alert alert-danger">{{ editIte.errorMsgAsamblare_Plecat }}</div>
+        </div>
+    </form>
+
+    <form class="col-md-12" style="clear: both;width:15%;float: left;display: table;margin-top:30px;" novalidate>
+        <label>Executant ITE:</label>
+        <input maxlength="40" disabled class="form-control" type="text" name="executant_ite" ng-model="newExecutant_Ite"
+            placeholder="-" required autocomplete="off">
+
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgExecutant_Ite">
+            <div class="alert alert-success">{{ editIte.successMsgExecutant_Ite }}</div>
+        </div>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgExecutant_Ite">
+            <div class="alert alert-danger">{{ editIte.errorMsgExecutant_Ite }}</div>
+        </div>
+    </form>
+
+
+    <form style="margin-top:30px;" id="submit3" ng-submit="editIte.updateObservatii_Asamblare(newObservatii_Asamblare, editIte.observatii_asamblareForm.observatii_asamblare.$valid)"
+        class="col-md-12" name="editIte.observatii_asamblareForm" novalidate>
+        <label>Observatii Asamblare:</label>
+        <textarea ng-disabled="!main.asamblare" id="submit-holder3" style="resize: none;" class="form-control" type="text"
+            name="observatii_asamblare" ng-model="newObservatii_Asamblare" required autocomplete="off"></textarea>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgObservatii_Asamblare">
+            <div class="alert alert-danger">{{ editIte.errorMsgObservatii_Asamblare }}</div>
+        </div>
+
+    </form>
+
+
+
+</div>
+
+<input disabled ng-show="main.admin1" maxlength="40" class="form-control" type="text" name="exec" ng-model="exec"
+    ng-value="exec=main.username" placeholder="-" autocomplete="off">
+
+<br>
+<br>
+
+<a class="btn btn-info btn-sm hidden-print" style="float:right;margin-bottom: 20px;" ng-click="Back()">Pagina
+    Precedenta</a>
+
+
+</form>
+
+<button ng-show="main.authorized" type="button" ng-click="editIte.deleteIte();" class="btn btn-danger">Sterge
+    ITE</button>
+<div class="row show-hide-message" ng-show="editIte.successDeleteIte">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-success">{{
+        editIte.successDeleteIte }}</div>
+</div>
+
+<div class="row show-hide-message" ng-show="editIte.errorMsgDeleteIte">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-danger">{{
+        editIte.errorMsgDeleteIte }}</div>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>

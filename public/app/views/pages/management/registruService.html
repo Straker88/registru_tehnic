@@ -1,0 +1,96 @@
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/daterangepicker.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/js/registruServ.js"></script>
+<script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
+
+
+<div class="page-header">
+    <h1 style="color: #1789ab;">Registru Service General</h1>
+</div>
+
+<div class="jumbotron text-center" ng-show="registruServ.loading">
+    <p>Se incarca...</p>
+</div>
+<br>
+<div style="font-size:12px; line-height:2.3em;">
+
+    <table id="tabel" class="display" style="width:100%">
+        <thead id="head2">
+            <tr>
+                <th style="width: 60px;">Nr.</th>
+                <th>Cabinet</th>
+                <th>Inregistrat</th>
+                <th>Nume</th>
+                <th>Denumire Aparat</th>
+                <th>Defectiune</th>
+                <th style="width: 120px;">Intrat Service</th>
+                <th style="width: 120px;">Finalizat Reparatie</th>
+                <th style="width: 120px;">Iesit Service</th>
+                <th style="width: 60px;">F/G</th>
+                <th style="width:20px;pointer-events: none;border-bottom: none;"></th>
+                <th style="width:20px;pointer-events: none;"></th>
+            </tr>
+        </thead>
+
+        <thead class="filters">
+            <tr>
+                <th class="FilterinputSearch FilterinputSearchNr">Nr.</th>
+                <th class="FilterinputSearch">Cabinet</th>
+                <th class="daterange">
+                    <div class="input-prepend input-group daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
+                        <p><input class="inputDateRegistruLabServ btn btn-primary btn-sm" name="reportrange" id="reportrange"
+                                readonly></p>
+                    </div>
+                </th>
+                <th class="FilterinputSearch">Nume - Prenume</th>
+                <th class="FilterinputSearch">Denumire Aparat</th>
+                <th class="FilterinputSearch">Defectiune Reclamata</th>
+                <th style="padding-top: 24px;">
+                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                        type="text" placeholder="Luna" id="pickyDate" />
+                </th>
+                <th style="padding-top: 24px;">
+                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                        type="text" placeholder="Luna" id="pickyDate1" />
+                </th>
+
+                <th style="padding-top: 24px;">
+                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                        type="text" placeholder="Luna" id="pickyDate2" />
+                </th>
+                <th class="FilterinputSearch FilterinputSearchNr">F/G</th>
+                <th style="width:20px;pointer-events: none;"></th>
+                <th style="width:20px;pointer-events: none;"></th>
+
+
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th style="width: 60px;">Nr.</th>
+                <th>Cabinet</th>
+                <th>Inregistrat</th>
+                <th>Nume</th>
+                <th>Denumire Aparat</th>
+                <th>Defectiune</th>
+                <th>Intrat Service</th>
+                <th>Finalizat Reparatie</th>
+                <th>Iesit Service</th>
+                <th style="width: 60px;">F/G</th>
+                <th style="width:20px;pointer-events: none;"></th>
+                <th style="width:20px;pointer-events: none;"></th>
+            </tr>
+        </tfoot>
+
+    </table>
+
+</div>
+
+<br>
+<br>

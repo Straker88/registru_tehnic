@@ -1,0 +1,1681 @@
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/daterangepicker.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/js/profilPacient.js"></script>
+<script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
+<div ng-controller="editProfilPacientCtrl as editPacient">
+
+    <div class="page-header" style="border-bottom:none;">
+        <img class="visible-print-block" style="float:right;margin-top:15px;" src="/assets/img/clarfon_transparent.png">
+
+        <div class="no-print">
+
+            <div>
+                <h1 style="color:#337ab7;">Profil Pacient:
+
+                    <span style="color:#337ab7;">
+                        <input style="padding:5px;border: none;background: #e0f1ff9e;text-align: center" ng-model="Pacient_Nume"
+                            readonly><br>
+
+                    </span>
+                </h1>
+            </div>
+            <div style="font-size: 20px;color:#337ab7;">
+                <span>
+                    Inregistrat:
+                    <input readonly style="border: none;width: 120px;background: #e0f1ff9e;text-align: center;
+            "
+                        ng-model="Pacient_Data_Inregistrare" readonly>
+                </span>
+
+                <span>
+                    in cabinetul:
+                    <input readonly style="border: none;background: #e0f1ff9e;text-align: center;
+            "
+                        ng-model="Pacient_Cabinet" readonly>
+                </span>
+            </div>
+        </div>
+    </div>
+    <hr class="no-print">
+
+    <div ng-show="main.user" class="dropdown no-print" style="margin: -1px 10px 0 0;display: table;
+                float: left;">
+        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Adauga Comenzi<span style="margin-left: 10px;"
+                class="caret"></span></button>
+        <ul class="nav nav-tabs dropdown-menu" style="float: left; margin-bottom: 50px;">
+
+            <li style="display: contents;" role="presentation" ng-click="editPacient.add_servicePhase();" ng-class="add_serviceTab">
+                <a href="#"><span class="glyphicon glyphicon-plus plus_glyph"></span>Service</a>
+            </li>
+            <li style="display: contents;" role="presentation" ng-click="editPacient.add_recarcasarePhase();" ng-class="add_recarcasareTab">
+                <a href="#"><span class="glyphicon glyphicon-plus plus_glyph"></span>Comanda Recarcasare</a>
+            </li>
+            <li style="display: contents;" role="presentation" ng-click="editPacient.add_olivaPhase();" ng-class="add_olivaTab">
+                <a href="#"><span class="glyphicon glyphicon-plus plus_glyph"></span>Comanda Oliva</a>
+            </li>
+            <li style="display: contents;" role="presentation" ng-click="editPacient.add_itePhase();" ng-class="add_iteTab">
+                <a href="#"><span class="glyphicon glyphicon-plus plus_glyph"></span>Comanda ITE</a>
+            </li>
+        </ul>
+
+    </div>
+
+
+    <ul class="nav nav-tabs no-print" style="float: left; margin-bottom: 25px;">
+
+        <li role="presentation" ng-click="editPacient.servicePhase();" ng-class="serviceTab">
+            <a href="#">Service-uri Pacient</a>
+        </li>
+        <li role="presentation" ng-click="editPacient.recarcasariPhase();" ng-class="recarcasariTab">
+            <a href="#">Recarcasari Pacient</a>
+        </li>
+        <li role="presentation" ng-click="editPacient.olivePhase();" ng-class="oliveTab">
+            <a href="#">Olive Pacient</a>
+        </li>
+        <li role="presentation" ng-click="editPacient.itePhase();" ng-class="iteTab">
+            <a href="#">ITE Pacient</a>
+        </li>
+        <li role="presentation" ng-click="editPacient.detaliiPhase();" ng-class="detaliiTab">
+            <a href="#">Detalii Pacient</a>
+        </li>
+    </ul>
+
+    <!---------------------------------------Registru Service --------------------------------------------------->
+
+    <div ng-show="editPacient.phase1">
+        <div>
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
+                Service Pacient
+            </h1>
+
+            <div style="font-size:12px; line-height:2.3em;margin-bottom: 100px;">
+
+                <table id="tabel" class="display" style="width:100%" ng-cloak>
+                    <thead id="head2">
+                        <tr>
+                            <th style="width: 70px;">Nr.</th>
+                            <th>Inregistrat</th>
+                            <th>Denumire Aparat</th>
+                            <th>Defectiune</th>
+                            <th>Intrat Service</th>
+                            <th>Finalizat Reparatie</th>
+                            <th>Iesit Service</th>
+                            <th>Predat Pacient</th>
+                            <th style="width:20px;pointer-events: none;border-bottom: none;"></th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                        </tr>
+                    </thead>
+
+                    <thead class="filters">
+                        <tr>
+                            <th class="FilterinputSearch FilterinputSearchNrCab">Nr.</th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDate" />
+                            </th>
+                            <th class="FilterinputSearch">Denumire Aparat</th>
+                            <th class="FilterinputSearch">Defectiune Reclamata</th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDate1" />
+                            </th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDate2" />
+                            </th>
+
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDate3" />
+                            </th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDate4" />
+                            </th>
+
+                            <th></th>
+                            <th style="display: none;"></th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody id="body1" ng-cloak>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th>Nr.</th>
+                            <th>Inregistrat</th>
+                            <th>Denumire Aparat</th>
+                            <th>Defectiune</th>
+                            <th>Intrat Service</th>
+                            <th>Finalizat Reparatie</th>
+                            <th>Iesit Service</th>
+                            <th>Predat Pacient</th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!---------------------------------------Registru Recarcasare --------------------------------------------------->
+
+    <div ng-show="editPacient.phase2">
+
+        <div>
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
+                Recarcasari Pacient
+            </h1>
+
+            <div style="font-size:12px; line-height:2.3em;margin-bottom: 100px;">
+
+                <table id="tabel_recarcasari" class="display" style="width:100%" ng-cloak>
+                    <thead id="head2">
+                        <tr>
+                            <th style="width: 70px;">Nr.</th>
+                            <th>Inregistrat</th>
+                            <th>Denumire Aparat</th>
+                            <th>Defectiune</th>
+                            <th>Intrat Asamblare</th>
+                            <th>Finalizat Recarcasare</th>
+                            <th>Iesit Asamblare</th>
+                            <th>Predat Pacient</th>
+                            <th style="width:20px;pointer-events: none;border-bottom: none;"></th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                        </tr>
+                    </thead>
+
+                    <thead class="filters3">
+                        <tr>
+                            <th class="FilterinputSearch FilterinputSearchNrCab">Nr.</th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatek" />
+                            </th>
+                            <th class="FilterinputSearch">Denumire Aparat</th>
+                            <th class="FilterinputSearch">Defectiune Reclamata</th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatel" />
+                            </th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatem" />
+                            </th>
+
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDaten" />
+                            </th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDateo" />
+                            </th>
+
+                            <th></th>
+                            <th style="display: none;"></th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody ng-cloak>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th style="width: 70px;">Nr.</th>
+                            <th>Inregistrat</th>
+                            <th>Denumire Aparat</th>
+                            <th>Defectiune</th>
+                            <th>Intrat Asamblare</th>
+                            <th>Finalizat Recarcasare</th>
+                            <th>Iesit Asamblare</th>
+                            <th>Predat Pacient</th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!---------------------------------------Registru Olive --------------------------------------------------->
+
+    <div ng-show="editPacient.phase3">
+        <div>
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
+                Olive Pacient
+            </h1>
+
+            <div style="font-size:12px; line-height:2.3em;margin-bottom: 100px;">
+
+                <table id="tabel_olive" class="display" style="width:100%" ng-cloak>
+                    <thead id="head2">
+                        <tr>
+                            <th style="width: 70px;">Nr.</th>
+                            <th style="width: 70px;">Serie</th>
+                            <th>Inregistrat</th>
+                            <th>Material Oliva</th>
+                            <th>Tip Oliva</th>
+                            <th>Intrat Plastie</th>
+                            <th>Finalizat Oliva</th>
+                            <th>Iesit Plastie</th>
+                            <th>Predat Pacient</th>
+                            <th style="width:20px;pointer-events: none;border-bottom: none;"></th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                        </tr>
+                    </thead>
+
+                    <thead class="filters1">
+
+                        <tr>
+                            <th class="FilterinputSearch FilterinputSearchNrCab">Nr.</th>
+                            <th class="FilterinputSearch FilterinputSearchNrCab">Serie</th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatea" />
+                            </th>
+                            <th class="FilterinputSearch">Denumire Aparat</th>
+                            <th class="FilterinputSearch">Defectiune Reclamata</th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDateb" />
+                            </th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatec" />
+                            </th>
+
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDated" />
+                            </th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatee" />
+                            </th>
+
+                            <th></th>
+                            <th style="display: none;"></th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody ng-cloak>
+
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th>Nr.</th>
+                            <th>Serie</th>
+                            <th>Inregistrat</th>
+                            <th>Material Oliva</th>
+                            <th>Tip Oliva</th>
+                            <th>Intrat Plastie</th>
+                            <th>Finalizat Oliva</th>
+                            <th>Iesit Plastie</th>
+                            <th>Predat Pacient</th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <!---------------------------------------Registru ITE --------------------------------------------------->
+
+    <div ng-show="editPacient.phase4">
+
+        <div>
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
+                ITE Pacient
+            </h1>
+
+            <div style="font-size:12px; line-height:2.3em;margin-bottom: 100px;">
+
+                <table id="tabel_ite" class="display" style="width:100%" ng-cloak>
+                    <thead id="head2">
+                        <tr>
+                            <th style="width: 70px;">Nr.</th>
+                            <th style="width: 70px;">Serie</th>
+                            <th>Inregistrat</th>
+                            <th>Model Aparat</th>
+                            <th>Carcasa</th>
+                            <th>Intrat Asamblare</th>
+                            <th>Finalizat ITE</th>
+                            <th>Iesit Asamblare</th>
+                            <th>Predat Pacient</th>
+                            <th style="width:20px;pointer-events: none;border-bottom: none;"></th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                        </tr>
+                    </thead>
+
+                    <thead class="filters2">
+                        <tr>
+                            <th class="FilterinputSearch FilterinputSearchNrCab">Nr.</th>
+                            <th class="FilterinputSearch FilterinputSearchNrCab">Serie</th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatef" />
+                            </th>
+                            <th class="FilterinputSearch">Denumire Aparat</th>
+                            <th class="FilterinputSearch">Defectiune Reclamata</th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDateg" />
+                            </th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDateh" />
+                            </th>
+
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatei" />
+                            </th>
+                            <th style="padding-top: 24px;">
+                                <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
+                                    type="text" placeholder="Luna" id="pickyDatej" />
+                            </th>
+
+                            <th></th>
+                            <th style="display: none;"></th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody ng-cloak>
+
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th style="width: 70px;">Nr.</th>
+                            <th style="width: 70px;">Serie</th>
+                            <th>Inregistrat</th>
+                            <th>Model Aparat</th>
+                            <th>Carcasa</th>
+                            <th>Intrat Asamblare</th>
+                            <th>Finalizat ITE</th>
+                            <th>Iesit Asamblare</th>
+                            <th>Predat Pacient</th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                            <th style="width:20px;pointer-events: none;"></th>
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <!---------------------------------------Detalii Pacient --------------------------------------------------->
+
+    <div ng-show="editPacient.phase5">
+        <div style="padding-bottom:100px;">
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;">Detalii
+                Pacient
+            </h1>
+
+            <div style="width:50%;">
+
+                <label for="Nume">Nume Pacient: </label>
+                <input type="text" class="form-control" maxlength="26" name="nume" placeholder="-" ng-model="Pacient_Nume"
+                    autocomplete="off" readonly>
+            </div>
+            <div style="max-width: 10%;float: left;text-align: center;margin: 10px 10px 0 0;">
+                <label for="Cnp">CNP: </label>
+                <input type="text" class="form-control" name="cnp" placeholder="-" ng-model="Pacient_Cnp" autocomplete="off"
+                    readonly>
+            </div>
+            <div style="max-width: 5%;float: left;text-align: center;margin: 10px 10px;">
+                <label for="Varsta">Varsta: </label>
+                <input style="text-align: center" type="text" class="form-control" name="varsta" placeholder="-"
+                    ng-model="Pacient_Varsta" autocomplete="off" readonly>
+            </div>
+            <div style="max-width: 5%;float: left;text-align: center;margin: 10px 10px;">
+                <label for="Sex">Sex: </label>
+                <input style="text-align: center" type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
+                    autocomplete="off" readonly>
+            </div>
+
+            <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Telefon(Pacient_Telefon,
+                    editPacient.telefonForm.telefon.$valid)"
+                name="editPacient.telefonForm" novalidate>
+                <label>Telefon:</label>
+                <input maxlength="26" class="form-control" type="text" name="telefon" ng-model="Pacient_Telefon"
+                    placeholder="-" required autocomplete="off">
+
+                <div class="row show-hide-message" ng-show="editPacient.successMsgTelefon">
+                    <div class="alert alert-success">{{ editPacient.successMsgTelefon }}</div>
+                </div>
+
+
+                <div class="row show-hide-message" ng-show="editPacient.errorMsgTelefon">
+                    <div class="alert alert-danger">{{ editPacient.errorMsgTelefon }}</div>
+                </div>
+                <button style="margin:10px 0 10px 0;" class="btn btn-info btn-sm no-print" type="submit">Salveaza
+                    telefon
+                    nou</button>
+
+
+            </form>
+
+            <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Adresa(Pacient_Adresa,
+                editPacient.adresaForm.adresa.$valid)"
+                name="editPacient.adresaForm" novalidate>
+                <label>Adresa:</label>
+                <input maxlength="70" class="form-control" type="text" name="adresa" ng-model="Pacient_Adresa"
+                    placeholder="-" required autocomplete="off">
+
+                <div class="row show-hide-message" ng-show="editPacient.successMsgAdresa">
+                    <div class="alert alert-success">{{ editPacient.successMsgAdresa }}</div>
+                </div>
+
+                <div class="row show-hide-message" ng-show="editPacient.errorMsgAdresa">
+                    <div class="alert alert-danger">{{ editPacient.errorMsgAdresa }}</div>
+                </div>
+                <button style="margin:10px 0 10px 0;" class="btn btn-info btn-sm no-print" type="submit">Salveaza
+                    adresa
+                    noua</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!--------------------------------------- Inregistrare Service-uri --------------------------------------------------->
+
+
+    <div ng-show="editPacient.phase6">
+        <h1 class="visible-print-block" style="margin-top:-25px;display: inline-block;color:#337ab7;">Fisa Service
+            Clarfon
+        </h1>
+        <span class="visible-print-block" style="float:left;margin:0 0 20px 10px;font-size:14px;">Operator de date cu
+            caracter
+            personal
+            nr. 23594
+        </span>
+
+        <h3 style="clear:both;color:#337ab7;">I. Receptie
+            Service - Clarfon {{main.username}}
+        </h3>
+
+        <hr class="visible-print-block">
+        <div class="row">
+            <div class="col-sm-12">
+                <form ng-controller="regServiceCtrl as registerService" name="regServForm" ng-submit="registerService.regService(regData, regServForm.$valid);">
+
+
+                    <div style="float:left;max-width: 34%;">
+                        <div style="display: table;max-width: 46%;float:left;text-align: center;" class="regServForm">
+                            <label for="Data Inregistrare">Data Inregistrare: </label>
+                            <input readonly type="text" style="max-width: 87%;text-align: center;" class="form-control"
+                                name="data_inregistrare" ng-model="data_inregistrare">
+                        </div>
+
+                        <div style="display: table;float:left;max-width: 46%;text-align: center;" class="regServForm">
+                            <label for="Data Estimativa">Data Estimativa: </label>
+                            <input readonly type="text" style="max-width: 87%;text-align: center;" class="form-control"
+                                name="data_estimativa" ng-model="data_estimativa">
+                        </div>
+                    </div>
+
+                    <div class="regAccesorii" style="float:right;margin-bottom:10px;">
+
+                        <p style="padding-left: 7px;margin-bottom: 0px;color:#337ab7;font-weight: 600;font-size: 13px;">Aparat(e)
+                            Ureche</p>
+                        <div class="optiuni" novalidate>
+                            <label for="Ur. Stanga">Stanga: </label>
+                            <br>
+                            <select ng-disabled="registerService.disabled" ng-model="registerService.regData.u_stanga"
+                                style="height:34px;" ng-class="registerService.regData.u_stanga" name="u_stanga">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+                        <div class="optiuni" novalidate>
+                            <label for="Ur. Dreapta">Dreapta: </label>
+                            <br>
+                            <select ng-disabled="registerService.disabled" ng-model="registerService.regData.u_dreapta"
+                                ng-class="registerService.regData.u_dreapta" style="height:34px;" name="u_dreapta">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+
+
+                        <div style="margin:-16px 5px 0 0;" class="optiuni" novalidate>
+                            <label for="Garantie">Certif. Garantie: </label>
+                            <br>
+                            <select ng-disabled="registerService.disabled" ng-model="registerService.regData.garantie"
+                                ng-class="registerService.regData.garantie" style="height:34px;" name="garantie">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                        <div class="optiuni" novalidate>
+                            <label for="Cutie">Cutie: </label>
+                            <br>
+                            <select ng-disabled="registerService.disabled" ng-model="registerService.regData.cutie"
+                                ng-class="registerService.regData.cutie" style="height:34px;" name="cutie">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                        <div class="optiuni" novalidate>
+                            <label for="Baterie">Baterie: </label>
+                            <br>
+                            <select ng-disabled="registerService.disabled" ng-model="registerService.regData.baterie"
+                                ng-class="registerService.regData.baterie" style="height:34px;" name="baterie">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                        <div class="optiuni" novalidate>
+                            <label for="Mulaj">Mulaj: </label>
+                            <br>
+                            <select ng-disabled="registerService.disabled" ng-model="registerService.regData.mulaj"
+                                ng-class="registerService.regData.mulaj" style="height:34px;" name="mulaj">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-right: 0px;" class="optiuni" novalidate>
+                            <label for="Oliva">Oliva: </label>
+                            <br>
+                            <select ng-disabled="registerService.disabled" ng-model="registerService.regData.oliva"
+                                ng-class="registerService.regData.oliva" style="height:34px;" name="oliva">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+                        <div style="margin-top:-16px;" class="optiuni" novalidate>
+                            <label style="color:#f00;" for="Taxa Urgenta Cabinet">Taxa Urgenta: </label>
+                            <br>
+                            <select ng-disabled="registerService.disabled" ng-model="registerService.regData.taxa_urgenta_cabinet"
+                                ng-class="registerService.regData.taxa_urgenta_cabinet" ng-init='registerService.regData.taxa_urgenta_cabinet="nu"'
+                                style="height:34px;" name="taxa_urgenta_cabinet">
+                                <option value="da">Da</option>
+                                <option selected value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-sm-12">
+
+
+                            <div style="width:50%;float: left;clear:left;margin-right: 0;" class="visible-print-block">
+                                <label for="Nume">Nume Pacient: </label>
+                                <input style="border: none;" readonly type="text" class="form-control" maxlength="26"
+                                    name="nume" placeholder="-" ng-model="Pacient_Nume" autocomplete="off">
+                            </div>
+
+                            <div style="width:37%;float:left;margin-right: 0;" class="regPacForm visible-print-block">
+                                <label for="Telefon">Telefon: </label>
+                                <input style="border: none;" readonly type="text" class="form-control" maxlength="26"
+                                    name="telefon" placeholder="-" ng-model="Pacient_Telefon" autocomplete="off">
+                            </div>
+
+                            <div style="width:13%;float: left;text-align: center; " class="visible-print-block">
+                                <label for="Nr. Comanda">Nr. Comanda: </label>
+                                <input readonly type="text" style="text-align: center;" class="form-control" name="comanda_service"
+                                    placeholder="-" ng-model="comanda_service" autocomplete="off">
+                            </div>
+
+
+                            <div style="width:49%;clear: both;margin: 10px 0 0 0;" class="regPacForm">
+                                <label for="Denumire_Aparat">Denumire Aparat(e): </label>
+                                <textarea ng-disabled="registerService.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="denumire_aparat" placeholder="-" ng-model="registerService.regData.denumire_aparat"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+                            <div style="width:49%;margin: 10px 0 0 0;" class="regPacForm">
+                                <label for="Serie_Aparat">Serie Aparat(e): </label>
+                                <textarea ng-disabled="registerService.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="serie_aparat" placeholder="-" ng-model="registerService.regData.serie_aparat"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+                            <br>
+
+                            <div style="width: 49%;float:left;clear: both;">
+                                <label for="Defectiune Reclamata">Defectiune Reclamata Pacient: </label>
+                                <textarea ng-disabled="registerService.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="defectiune_reclamata" placeholder="-" ng-model="registerService.regData.defectiune_reclamata"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+                            <div style="width: 49%;float: left;">
+                                <label for="Observatii Pacient">Observatii Pacient</label>
+                                <textarea ng-disabled="registerService.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="observatii_pacient" placeholder="-" ng-model="registerService.regData.observatii_pacient"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <h3 style="display: inline-block;color:#337ab7;">II. Diagnostic Cabinet:
+                    </h3>
+                    <hr class="visible-print-block">
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div style="float:left;width: 49%;display: table;">
+                                <label for="Constatare Cabinet">Constatare Cabinet: </label>
+                                <textarea ng-disabled="registerService.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="constatare_cabinet" placeholder="-" ng-model="registerService.regData.constatare_cabinet"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+
+                            <div style="float:left;width: 49%;display:table;">
+                                <label for="Observatii Cabinet">Observatii Cabinet</label>
+                                <textarea ng-disabled="registerService.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="observatii_cabinet" placeholder="Ex. carcasa fisurata, buton programe rupt, lipsa fir extractie, etc."
+                                    ng-model="registerService.regData.observatii_cabinet" autocomplete="off"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br>
+
+                    <h3 class="visible-print-block" style="display: inline-block;color:#337ab7;margin: 0;">III. Predare
+                        /
+                        Primire
+                        Service: </h3>
+                    <hr class="visible-print-block">
+
+                    <div class="row visible-print-block">
+                        <div class="col-sm-12">
+
+                            <div style="float:left;width: 50%;display:table;padding:5px 45px;">
+                                <p>Predat pacient <br>(semnatura) <br> ................</p>
+                            </div>
+                            <div style="float:right;width: 49%;display: table;padding:5px 45px;">
+                                <p style="float:right;">Primit audiolog <br>(semnatura) <br> ................</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="visible-print-block">
+
+                    <div style="text-align:center;" class="row visible-print-block">
+                        <div class="col-sm-12">
+                            <p>Perioada de efectuare a reparatiei este de maximum 15 zile pentru aparatele in garantie.
+                                Postgarantia pieselor
+                                inlocuite
+                                este de 3 luni de la data returnarii aparatului. Pacientul beneficiaza de garantie
+                                numai
+                                daca foloseste
+                                aparatul
+                                corect, conform instructiunilor de folosire aprobate de producator.</p>
+                        </div>
+                    </div>
+                    <hr class="visible-print-block">
+                    <div class="row show-hide-message no-print" ng-show="registerService.errorMsg">
+                        <div id="regPacAlert" class="alert-danger">{{ registerService.errorMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerService.successMsg">
+                        <div id="regPacAlert" class="alert-success">{{ registerService.successMsg }}</div>
+                    </div>
+
+                    <button style="float: right;clear: both;margin-bottom: 90px;" class="btn btn-info
+                      btn-sm no-print"
+                        ng-disabled="registerService.disabled" ng-show="registerService.adauga" type="submit">Adauga si
+                        Printeaza Fisa</button>
+                    <button type=button ng-click="print_service()" ng-show="registerService.print" style="float: right;clear: both;margin-bottom: 90px;"
+                        class="btn btn-danger btn-sm no-print">Printeaza</button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--------------------------------------- Inregistrare Recarcasari --------------------------------------------------->
+
+
+    <div ng-show="editPacient.phase7">
+        <h1 class="visible-print-block" style="margin-top:-25px;display: inline-block;color:#337ab7;">Fisa Recarcasare
+            Clarfon
+        </h1>
+        <span class="visible-print-block" style="float:left;margin:0 0 20px 10px;font-size:14px;">Operator de date cu
+            caracter
+            personal
+            nr. 23594
+        </span>
+
+        <h3 style="clear:both;color:#337ab7;">I. Receptie
+            Recarcasare - Clarfon {{main.username}}
+        </h3>
+
+        <hr class="visible-print-block">
+        <div class="row">
+            <div class="col-sm-12">
+                <form ng-controller="regRecarcasareCtrl as registerRecarcasare" name="regServForm" ng-submit="registerRecarcasare.regRecarcasare(regData, regServForm.$valid);">
+
+                    <div style="float:left;max-width: 34%;">
+                        <div style="display: table;max-width: 46%;float:left;text-align: center;" class="regServForm">
+                            <label for="Data Inregistrare">Data Inregistrare: </label>
+                            <input readonly type="text" style="max-width: 87%;text-align: center;" class="form-control"
+                                name="data_inregistrare" ng-model="data_inregistrare">
+                        </div>
+
+                        <div style="display: table;float:left;max-width: 46%;text-align: center;" class="regServForm">
+                            <label for="Data Estimativa">Data Estimativa: </label>
+                            <input readonly type="text" style="max-width: 87%;text-align: center;" class="form-control"
+                                name="data_estimativa" ng-model="data_estimativa">
+                        </div>
+                    </div>
+
+                    <div class="regAccesorii" style="float:right;margin-bottom:10px;">
+
+                        <p style="padding-left: 7px;margin-bottom: 0px;color:#337ab7;font-weight: 600;font-size: 13px;">Aparat(e)
+                            Ureche</p>
+                        <div class="optiuni" novalidate>
+                            <label for="Ur. Stanga">Stanga: </label>
+                            <br>
+                            <select ng-disabled="registerRecarcasare.disabled" ng-model="registerRecarcasare.regData.u_stanga"
+                                style="height:34px;" ng-class="registerRecarcasare.regData.u_stanga" name="u_stanga">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+                        <div class="optiuni" novalidate>
+                            <label for="Ur. Dreapta">Dreapta: </label>
+                            <br>
+                            <select ng-disabled="registerRecarcasare.disabled" ng-model="registerRecarcasare.regData.u_dreapta"
+                                ng-class="registerRecarcasare.regData.u_dreapta" style="height:34px;" name="u_dreapta">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+
+
+                        <div style="margin:-16px 5px 0 0;" class="optiuni" novalidate>
+                            <label for="Garantie">Certif. Garantie: </label>
+                            <br>
+                            <select ng-disabled="registerRecarcasare.disabled" ng-model="registerRecarcasare.regData.garantie"
+                                ng-class="registerRecarcasare.regData.garantie" style="height:34px;" name="garantie">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                        <div class="optiuni" novalidate>
+                            <label for="Cutie">Cutie: </label>
+                            <br>
+                            <select ng-disabled="registerRecarcasare.disabled" ng-model="registerRecarcasare.regData.cutie"
+                                ng-class="registerRecarcasare.regData.cutie" style="height:34px;" name="cutie">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                        <div class="optiuni" novalidate>
+                            <label for="Baterie">Baterie: </label>
+                            <br>
+                            <select ng-disabled="registerRecarcasare.disabled" ng-model="registerRecarcasare.regData.baterie"
+                                ng-class="registerRecarcasare.regData.baterie" style="height:34px;" name="baterie">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                        <div class="optiuni" novalidate>
+                            <label for="Mulaj">Mulaj: </label>
+                            <br>
+                            <select ng-disabled="registerRecarcasare.disabled" ng-model="registerRecarcasare.regData.mulaj"
+                                ng-class="registerRecarcasare.regData.mulaj" style="height:34px;" name="mulaj">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="da">Da</option>
+                                <option value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-top:-16px;" class="optiuni" novalidate>
+                            <label style="color:#f00;" for="Taxa Urgenta Cabinet">Taxa Urgenta: </label>
+                            <br>
+                            <select ng-disabled="registerRecarcasare.disabled" ng-model="registerRecarcasare.regData.taxa_urgenta_cabinet"
+                                ng-class="registerRecarcasare.regData.taxa_urgenta_cabinet" ng-init='registerRecarcasare.regData.taxa_urgenta_cabinet="nu"'
+                                style="height:34px;" name="taxa_urgenta_cabinet">
+                                <option value="da">Da</option>
+                                <option selected value="nu">Nu</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-sm-12">
+
+
+                            <div style="width:50%;float: left;clear:left;margin-right: 0;" class="visible-print-block">
+                                <label for="Nume">Nume Pacient: </label>
+                                <input style="border: none;" readonly type="text" class="form-control" maxlength="26"
+                                    name="nume" placeholder="-" ng-model="Pacient_Nume" autocomplete="off">
+                            </div>
+
+                            <div style="width:37%;float:left;margin-right: 0;" class="regPacForm visible-print-block">
+                                <label for="Telefon">Telefon: </label>
+                                <input style="border: none;" readonly type="text" class="form-control" maxlength="26"
+                                    name="telefon" placeholder="-" ng-model="Pacient_Telefon" autocomplete="off">
+                            </div>
+
+                            <div style="width:13%;float: left;text-align: center; " class="visible-print-block">
+                                <label for="Nr. Comanda">Nr. Comanda: </label>
+                                <input readonly type="text" style="text-align: center;" class="form-control" name="comanda_recarcasare"
+                                    placeholder="-" ng-model="comanda_recarcasare" autocomplete="off">
+                            </div>
+
+
+                            <div style="width:49%;clear: both;margin: 10px 0 0 0;" class="regPacForm">
+                                <label for="Denumire_Aparat">Denumire Aparat(e): </label>
+                                <textarea ng-disabled="registerRecarcasare.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="denumire_aparat" placeholder="-" ng-model="registerRecarcasare.regData.denumire_aparat"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+                            <div style="width:49%;margin: 10px 0 0 0;" class="regPacForm">
+                                <label for="Serie_Aparat">Serie Aparat(e): </label>
+                                <textarea ng-disabled="registerRecarcasare.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="serie_aparat" placeholder="-" ng-model="registerRecarcasare.regData.serie_aparat"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+                            <br>
+
+                            <div style="width: 49%;float:left;clear: both;">
+                                <label for="Defectiune Reclamata">Defectiune Reclamata Pacient: </label>
+                                <textarea ng-disabled="registerRecarcasare.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="defectiune_reclamata" placeholder="-" ng-model="registerRecarcasare.regData.defectiune_reclamata"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+                            <div style="width: 49%;float: left;">
+                                <label for="Observatii Pacient">Observatii Pacient</label>
+                                <textarea ng-disabled="registerRecarcasare.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="observatii_pacient" placeholder="-" ng-model="registerRecarcasare.regData.observatii_pacient"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <h3 style="display: inline-block;color:#337ab7;">II. Diagnostic Cabinet:
+                    </h3>
+                    <hr class="visible-print-block">
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div style="float:left;width: 49%;display: table;">
+                                <label for="Constatare Cabinet">Constatare Cabinet: </label>
+                                <textarea ng-disabled="registerRecarcasare.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="constatare_cabinet" placeholder="-" ng-model="registerRecarcasare.regData.constatare_cabinet"
+                                    autocomplete="off"></textarea>
+                            </div>
+
+
+                            <div style="float:left;width: 49%;display:table;">
+                                <label for="Observatii Cabinet">Observatii Cabinet</label>
+                                <textarea ng-disabled="registerRecarcasare.disabled" type="text" class="form-control textarea_print"
+                                    maxlength="80" name="observatii_cabinet" placeholder="Ex. carcasa fisurata, buton programe rupt, lipsa fir extractie, etc."
+                                    ng-model="registerRecarcasare.regData.observatii_cabinet" autocomplete="off"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br>
+
+                    <h3 class="visible-print-block" style="display: inline-block;color:#337ab7;margin: 0;">III. Predare
+                        /
+                        Primire
+                        Recarcasare: </h3>
+                    <hr class="visible-print-block">
+
+                    <div class="row visible-print-block">
+                        <div class="col-sm-12">
+
+                            <div style="float:left;width: 50%;display:table;padding:5px 45px;">
+                                <p>Predat pacient <br>(semnatura) <br> ................</p>
+                            </div>
+                            <div style="float:right;width: 49%;display: table;padding:5px 45px;">
+                                <p style="float:right;">Primit audiolog <br>(semnatura) <br> ................</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="visible-print-block">
+
+                    <div style="text-align:center;" class="row visible-print-block">
+                        <div class="col-sm-12">
+                            <p>Perioada de efectuare a reparatiei este de maximum 15 zile pentru aparatele in garantie.
+                                Postgarantia pieselor
+                                inlocuite
+                                este de 3 luni de la data returnarii aparatului. Recarcasarile au o garantie de 6 luni
+                                (carcasa). Pacientul
+                                beneficiaza de garantie numai
+                                daca foloseste
+                                aparatul
+                                corect, conform instructiunilor de folosire aprobate de producator.</p>
+                        </div>
+                    </div>
+
+                    <hr class="visible-print-block">
+
+                    <div class="row show-hide-message no-print" ng-show="registerRecarcasare.errorMsg">
+                        <div id="regPacAlert" class="alert-danger">{{ registerRecarcasare.errorMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerRecarcasare.successMsg">
+                        <div id="regPacAlert" class="alert-success">{{ registerRecarcasare.successMsg }}</div>
+                    </div>
+
+                    <button style="float: right;clear: both;margin-bottom: 90px;" class="btn btn-info
+                      btn-sm no-print"
+                        ng-disabled="registerRecarcasare.disabled" ng-show="registerRecarcasare.adauga" type="submit">Adauga
+                        si Printeaza Fisa</button>
+                    <button type=button ng-click="print_recarcasare()" ng-show="registerRecarcasare.print" style="float: right;clear: both;margin-bottom: 90px;"
+                        class="btn btn-danger btn-sm no-print">Printeaza</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--------------------------------------- Inregistrare Olive --------------------------------------------------->
+    <div ng-show="editPacient.phase8">
+        <h2 class="visible-print-block" style="margin-top:-25px;display: inline-block;color:#337ab7;">Comanda Oliva
+            <span>
+                - <input readonly style="border: none;background: #e0f1ff9e;
+        width: 300px;" ng-model="Pacient_Cabinet"
+                    readonly></span>
+        </h2>
+        <span class="visible-print-block" style="display:table;margin:0 0 20px 10px;font-size:14px;">Operator de
+            date cu caracter personal nr. 23594
+        </span>
+        <h3 class="no-print" style="clear:both;color:#337ab7;">I. Receptie
+            Comanda Oliva - Clarfon {{main.username}}
+        </h3>
+
+        <hr class="visible-print-block">
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <form id="olivaForm" ng-controller="regOlivaCtrl as registerOliva" name="regOlivaForm" ng-submit="registerOliva.regOliva(regData, regOlivaForm.$valid);">
+
+
+                    <div class="row visible-print-block" style="margin-bottom:40px;">
+                        <div class="col-sm-12">
+
+                            <div style="width:35%;margin-right: 10px;display: table;
+                        float: left;
+                        clear: left;">
+                                <label for="Nume">Nume Pacient: </label>
+                                <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="Pacient_Nume"
+                                    autocomplete="off">
+                            </div>
+
+                            <div ng-controller="regOlivaCtrl" style="width:35%;float: left;margin-right:11px;">
+                                <label for="Telefon">Telefon: </label>
+                                <input readonly type="text" class="form-control" name="telefon" placeholder="-"
+                                    ng-model="Pacient_Telefon" autocomplete="off">
+                            </div>
+                            <div ng-controller="regOlivaCtrl" style="width:6%;float: left;margin-right: 12px;">
+                                <label for="Varsta">Varsta: </label>
+                                <input readonly type="text" class="form-control" maxlength="3" name="varsta"
+                                    placeholder="-" ng-model="Pacient_Varsta" autocomplete="off">
+                            </div>
+                            <div style="width:5%;float: left;margin-right: 12px;text-align: center;">
+                                <label for="Sex">Sex: </label>
+                                <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
+                                    autocomplete="off">
+                            </div>
+                            <div style="width:13%;float: left;text-align: center;">
+                                <label for="Nr. Comanda">Nr. Comanda: </label>
+                                <input readonly type="text" style="text-align: center;" class="form-control" name="comanda_oliva"
+                                    placeholder="-" ng-model="comanda_oliva" autocomplete="off">
+                            </div>
+
+                            <div ng-controller="regOlivaCtrl" style="width:100%; margin-top: 10px;float: left;">
+                                <label for="Adresa">Adresa: </label>
+                                <input readonly type="text" class="form-control" name="adresa" placeholder="-" ng-model="Pacient_Adresa"
+                                    autocomplete="off">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div style="float:right;">
+                        <table class="tr_padding" style="float:right;margin-left: 5px;">
+
+                            <tr>
+                                <td>125</td>
+                                <td>250</td>
+                                <td>500</td>
+                                <td style="padding-right:48px;">1k</td>
+                                <td style="padding-right:45px;">2k</td>
+                                <td style="padding-right:43px;">4k</td>
+                                <td style="padding-right:41px;">8k</td>
+                                <td style="padding-right:4px;">12k</td>
+                            </tr>
+
+                        </table>
+
+                        <canvas id="myCanvas" width="400" height="280" style="float:right;clear: both;"></canvas>
+
+                        <table class="tr_height" style="float:right; margin-right: 8px; margin-top: 12px;">
+                            <tr>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>40</td>
+                            </tr>
+                            <tr>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>60</td>
+                            </tr>
+                            <tr>
+                                <td>70</td>
+                            </tr>
+                            <tr>
+                                <td>80</td>
+                            </tr>
+                            <tr>
+                                <td>90</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>110</td>
+                            </tr>
+                            <tr>
+                                <td>120</td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+
+                    <div style="width:35%; float:left;">
+                        <div style="width:100%;" class="regOlivaForm">
+                            <label for="Model_Aparat">Model aparat(e) auditiv: </label>
+                            <textarea ng-disabled="registerOliva.disabled" style="width: 400px;height: 60px;resize: none;"
+                                maxlength="80" type="text" class="form-control" name="model_aparat" placeholder="Ex. Flow 13 SP"
+                                ng-model="registerOliva.regData.model_aparat" autocomplete="off"></textarea>
+                        </div>
+                        <div style="width:100%;clear:both;float:left;" class="regOlivaForm">
+                            <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Ureche
+                                protezata</p>
+                            <div class="optiuni" novalidate>
+                                <select ng-disabled="registerOliva.disabled" ng-model="registerOliva.regData.ureche_protezata"
+                                    style="height:34px;" name="ureche_protezata">
+                                    <option value="" selected disabled hidden>Alege</option>
+                                    <option value="Stanga">Stanga</option>
+                                    <option value="Dreapta">Dreapta</option>
+                                    <option value="Bilateral">Bilateral</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="width:23%;" class="regOlivaForm">
+                            <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Oliva</p>
+                            <div class="optiuni" novalidate>
+                                <select ng-disabled="registerOliva.disabled" ng-model="registerOliva.regData.material_oliva"
+                                    style="height:34px;" name="material_oliva">
+                                    <option value="" selected disabled hidden>Alege</option>
+                                    <option value="Elastica">Elastica</option>
+                                    <option value="Dura">Dura</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="width:39%;" class="regOlivaForm">
+                            <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Tip oliva</p>
+                            <div class="optiuni" novalidate>
+                                <select ng-disabled="registerOliva.disabled" ng-model="registerOliva.regData.tip_oliva"
+                                    style="height:34px;" name="tip_oliva">
+                                    <option value="" selected disabled hidden>Alege</option>
+                                    <option value="Canal">Canal</option>
+                                    <option value="Inel">Inel</option>
+                                    <option value="Skelleton">Skelleton</option>
+                                    <option value="Full-concha">Full-concha</option>
+                                    <option value="Semi-concha">Semi-concha</option>
+                                    <option value="liby horn">liby horn</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="width:100%;display:table;">
+                            <label for="Vent_Oliva">Vent: (mm)</label>
+                            <input ng-disabled="registerOliva.disabled" maxlength="31" type="text" class="form-control"
+                                name="nume" placeholder="-" ng-model="registerOliva.regData.vent_oliva" autocomplete="off">
+                        </div>
+                        <hr class="visible-print-block">
+
+                    </div>
+
+                    <div style="float: right; clear: right;margin: 10px 85px 5px 0;">
+                        <button class="btn btn-info btn-sm no-print" type="button" id=stanga>Stanga</button>
+                        <button class="btn btn-danger btn-sm no-print" type="button" id=dreapta>Dreapta</button>
+                        <button class="btn btn-warning no-print" id=sterge type="button" class="no-print">Sterge</button>
+                    </div>
+
+                    <br>
+
+                    <div style="width:40%;float:right;clear:right;margin-bottom: 30px;">
+                        <div style="width:100%;">
+                            <label class="label_print" for="Observatii_Oliva">Observatii: </label>
+                            <textarea ng-disabled="registerOliva.disabled" maxlength="265" style="resize:none;min-height: 95px;border: 1px solid #000;"
+                                type="text" class="form-control textarea_audiograma" name="nume" placeholder="Ex. Refacere Oliva"
+                                ng-model="registerOliva.regData.observatii_oliva" autocomplete="off"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div style="width:8%;float: right;clear:right;margin: -1px 20px 20px 0;text-align: center;"
+                        novalidate>
+                        <p style="margin-bottom: 6px;color:#f00;font-weight: 600;font-size: 13px;">Taxa Urgenta</p>
+                        <select ng-disabled="registerOliva.disabled" ng-model="registerOliva.regData.oliva_taxa_urgenta"
+                            ng-class="registerOliva.regData.oliva_taxa_urgenta" ng-init='registerOliva.regData.oliva_taxa_urgenta="nu"'
+                            style="height:34px;padding-left: 25px;width: 80px;border: 1px solid #cac3c373;
+                        "
+                            name="oliva_taxa_urgenta">
+                            <option value="da">Da</option>
+                            <option selected value="nu">Nu</option>
+                        </select>
+                    </div>
+
+                    <div class="visible-print-block">
+                        <div style="width:13%;float: right;text-align: center;display: none;">
+                            <label for="Data_Estimativa">Data <br> Estimativa</label>
+                            <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="data_estimativa"
+                                autocomplete="off">
+                        </div>
+                        <div style="width:13%;float: right;text-align: center;">
+                            <label for="Data_Inregistrare">Data Inregistrare</label>
+                            <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="data_inregistrare"
+                                autocomplete="off">
+                        </div>
+                        <div style="width:13%;float: right;text-align: center;">
+                            <label style="width: 50%; margin: 0 auto; margin-top: 5px;" for="Serie">Serie Oliva(e):
+                            </label>
+                            <input readonly type="text" style="text-align: center;" class="form-control" name="serie_oliva"
+                                placeholder="-" ng-model="serie_oliva" autocomplete="off">
+                        </div>
+                    </div>
+
+
+                    <div style="width:40%;display: table;" class="pret_oliva">
+                        <label for="Pret_Final">Pret (RON)</label>
+                        <input ng-disabled="registerOliva.disabled" maxlength="43" type="text" class="form-control"
+                            name="pret_final" placeholder="-" ng-model="registerOliva.regData.pret_final" autocomplete="off">
+                    </div>
+                    <div style="width: 52%;display: table;">
+                        <div style="width:70%;display: table;float:left;">
+                            <label for="Nume">Achitat avans (RON)</label>
+                            <input ng-disabled="registerOliva.disabled" maxlength="33" type="text" class="form-control"
+                                name="nume" placeholder="-" ng-model="registerOliva.regData.avans" autocomplete="off">
+                        </div>
+                        <div style="width:30%;display: table;text-align: center;">
+                            <label for="Nume">la data de</label>
+                            <input style="text-align: center;border:none;" readonly type="text" class="form-control"
+                                name="nume" placeholder="-" ng-model="data_inregistrare" autocomplete="off">
+                        </div>
+                    </div>
+                    <div style="display: table; margin-bottom: 25px;">
+                        <label for="Nume">Rest de plata la eliberarea produsului (RON)</label>
+                        <input disabled maxlength="26" type="text" class="form-control" name="nume" placeholder="-"
+                            ng-model="registerOliva.regData.rest_plata" autocomplete="off">
+
+                    </div>
+
+                    <hr class="visible-print-block" style="clear:both;">
+
+                    <div style="width:100%;float:left;display: table;clear: both;margin-bottom:15px;" class="visible-print-block">
+                        <div style="width:40%;float:left;">
+                            <label for="Nume">Semnatura Pacient: </label>
+                            ...................................
+                        </div>
+
+                        <div style="width:40%;float:right;">
+                            <label for="Nume">Semnatura Audiolog: </label>
+                            ...................................
+
+                        </div>
+
+                    </div>
+
+                    <hr class="visible-print-block" style="clear:both;">
+
+                    <div style="text-align: center;width: 100%;margin-top:0px;" class="row visible-print-block">
+
+                        <div class="col-sm-12">
+                            <p>Se va lua in considerare termenul de productie de minim 4 zile lucratoare de la data
+                                intrarii in
+                                laborator.
+                                <br> Termenul de garantie pentru olive este de 3 luni de la data primirii de catre
+                                pacient.</p>
+                        </div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerOliva.errorMsg">
+                        <div id="regPacAlert" class="alert-danger">{{ registerOliva.errorMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerOliva.successMsg">
+                        <div id="regPacAlert" class="alert-success">{{ registerOliva.successMsg }}</div>
+                    </div>
+
+                    <button style="float: right;clear:both;margin-bottom: 90px;" ng-show="registerOliva.adauga"
+                        ng-disabled="registerOliva.disabled" class="btn btn-info btn-sm no-print" type="submit">Adauga
+                        si Printeaza Fisa</button>
+                    <button type=button ng-click="print_oliva()" ng-show="registerOliva.print" style="float: right;clear:both;margin-bottom: 90px;"
+                        class="btn btn-danger btn-sm no-print">Printeaza</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--------------------------------------- Inregistrare ITE --------------------------------------------------->
+    <div ng-show="editPacient.phase9">
+        <h2 class="visible-print-block" style="margin-top:-25px;display: inline-block;color:#337ab7;">Comanda ITE
+            <span>
+                - <input readonly style="border: none;background: #e0f1ff9e;
+            width: 300px;" ng-model="Pacient_Cabinet"
+                    readonly></span>
+        </h2>
+        <span class="visible-print-block" style="display:table;margin:0 0 20px 10px;font-size:14px;">Operator de
+            date cu caracter personal nr. 23594
+        </span>
+        <h3 class="no-print" style="clear:both;color:#337ab7;">I. Receptie
+            Comanda ITE - Clarfon {{main.username}}
+        </h3>
+
+        <hr class="visible-print-block">
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <form id="iteForm" ng-controller="regIteCtrl as registerIte" name="regIteForm" ng-submit="registerIte.regIte(regData, regIteForm.$valid);">
+
+
+                    <div class="row visible-print-block" style="margin-bottom:40px;">
+                        <div class="col-sm-12">
+
+                            <div style="width:35%;margin-right: 10px;display: table;
+                            float: left;
+                            clear: left;">
+                                <label for="Nume">Nume Pacient: </label>
+                                <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="Pacient_Nume"
+                                    autocomplete="off">
+                            </div>
+
+                            <div ng-controller="regIteCtrl" style="width:35%;float: left;margin-right:11px;">
+                                <label for="Telefon">Telefon: </label>
+                                <input readonly type="text" class="form-control" name="telefon" placeholder="-"
+                                    ng-model="Pacient_Telefon" autocomplete="off">
+                            </div>
+                            <div ng-controller="regIteCtrl" style="width:6%;float: left;margin-right: 12px;">
+                                <label for="Varsta">Varsta: </label>
+                                <input readonly type="text" class="form-control" maxlength="3" name="varsta"
+                                    placeholder="-" ng-model="Pacient_Varsta" autocomplete="off">
+                            </div>
+                            <div style="width:5%;float: left;margin-right: 12px;text-align: center; ">
+                                <label for="Sex">Sex: </label>
+                                <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
+                                    autocomplete="off">
+                            </div>
+                            <div style="width:13%;float: left;text-align: center; ">
+                                <label for="Nr. Comanda">Nr. Comanda: </label>
+                                <input readonly type="text" style="text-align: center;" class="form-control" name="comanda_ite"
+                                    placeholder="-" ng-model="comanda_ite" autocomplete="off">
+                            </div>
+
+                            <div ng-controller="regIteCtrl" style="width:100%;margin-top:10px; margin-bottom: 10px;float: left;">
+                                <label for="Adresa">Adresa: </label>
+                                <input readonly type="text" class="form-control" name="adresa" placeholder="-" ng-model="Pacient_Adresa"
+                                    autocomplete="off">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div style="float:right;">
+                        <table class="tr_padding" style="float:right;margin-left: 5px;">
+
+                            <tr>
+                                <td>125</td>
+                                <td>250</td>
+                                <td>500</td>
+                                <td style="padding-right:48px;">1k</td>
+                                <td style="padding-right:45px;">2k</td>
+                                <td style="padding-right:43px;">4k</td>
+                                <td style="padding-right:41px;">8k</td>
+                                <td style="padding-right:4px;">12k</td>
+                            </tr>
+
+                        </table>
+
+                        <canvas id="myCanvasIte" width="400" height="280" style="float:right;clear: both;"></canvas>
+
+                        <table class="tr_height" style="float:right; margin-right: 8px; margin-top: 12px;">
+                            <tr>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>40</td>
+                            </tr>
+                            <tr>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>60</td>
+                            </tr>
+                            <tr>
+                                <td>70</td>
+                            </tr>
+                            <tr>
+                                <td>80</td>
+                            </tr>
+                            <tr>
+                                <td>90</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>110</td>
+                            </tr>
+                            <tr>
+                                <td>120</td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+
+                    <div style="width:26%; float:left;">
+                        <div style="width:100%;" class="regIteForm">
+                            <label for="Model_Aparat">Model aparat(e) auditiv: </label>
+                            <textarea ng-disabled="registerIte.disabled" style="width: 400px;height: 60px;resize: none;"
+                                maxlength="80" type="text" class="form-control" name="model_aparat" placeholder="Ex. Shine Rev 4 SP"
+                                ng-model="registerIte.regData.model_aparat" autocomplete="off"></textarea>
+                        </div>
+                        <div style="width:100%;clear:both;float:left;" class="regIteForm">
+                            <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Ureche
+                                protezata</p>
+                            <div class="optiuni" novalidate>
+                                <select ng-disabled="registerIte.disabled" ng-model="registerIte.regData.ureche_protezata"
+                                    style="height:34px;" name="ureche_protezata">
+                                    <option value="" selected disabled hidden>Alege</option>
+                                    <option value="Stanga">Stanga</option>
+                                    <option value="Dreapta">Dreapta</option>
+                                    <option value="Bilateral">Bilateral</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="width:30%;float: left; clear: left;" class="regIteForm">
+                            <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Carcasa</p>
+                            <div class="optiuni" novalidate>
+                                <select ng-disabled="registerIte.disabled" ng-model="registerIte.regData.carcasa_ite"
+                                    style="height:34px;" name="carcasa_ite">
+                                    <option value="" selected disabled hidden>Alege</option>
+                                    <option value="ITC">ITC</option>
+                                    <option value="Mini-Canal">Mini-Canal</option>
+                                    <option value="CIC">CIC</option>
+                                    <option value="IIC">IIC</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="width:39%;float:left;" class="regIteForm">
+                            <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Culoare</p>
+                            <div class="optiuni" novalidate>
+                                <select ng-disabled="registerIte.disabled" ng-model="registerIte.regData.culoare_carcasa"
+                                    style="height:34px;" name="culoare_carcasa">
+                                    <option value="" selected disabled hidden>Alege</option>
+                                    <option value="Bej">Bej</option>
+                                    <option value="Specifica">Specifica</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="width:30%;float: left; clear: left;" class="regIteForm">
+                            <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Buton
+                                Programe</p>
+                            <div class="optiuni" novalidate>
+                                <select ng-disabled="registerIte.disabled" ng-model="registerIte.regData.buton_programe"
+                                    style="height:34px;" name="buton_programe">
+                                    <option value="" selected disabled hidden>Alege</option>
+                                    <option value="Da">Da</option>
+                                    <option value="Nu">Nu</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="width:39%;float:left;" class="regIteForm">
+                            <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Potentiometru
+                                Volum</p>
+                            <div class="optiuni" novalidate>
+                                <select ng-disabled="registerIte.disabled" ng-model="registerIte.regData.potentiometru_volum"
+                                    style="height:34px;" name="potentiometru_volum">
+                                    <option value="" selected disabled hidden>Alege</option>
+                                    <option value="Da">Da</option>
+                                    <option value="Nu">Nu</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="width:427px;display:table;clear:left;">
+                            <label for="Vent_Ite">Vent: (mm)</label>
+                            <input maxlength="31" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.vent_ite"
+                                autocomplete="off" ng-disabled="registerIte.disabled">
+                        </div>
+                        <hr class="visible-print-block">
+
+                    </div>
+
+                    <div style="float: right; clear: right;margin: 10px 85px 5px 0;">
+                        <button class="btn btn-info btn-sm no-print" type="button" id=stanga_ite>Stanga</button>
+                        <button class="btn btn-danger btn-sm no-print" type="button" id=dreapta_ite>Dreapta</button>
+                        <button class="btn btn-warning no-print" type="button" id=sterge_ite class="no-print">Sterge</button>
+                    </div>
+
+                    <br>
+
+                    <div style="width:40%;float:right;clear:right;margin-bottom: 30px;">
+                        <div style="width:100%;">
+                            <label class="label_print" for="Observatii_Ite">Observatii: </label>
+                            <textarea maxlength="265" style="resize:none;min-height: 95px;border: 1px solid #000;" type="text"
+                                class="form-control textarea_audiograma" name="nume" placeholder="Ex. fara fir extractie"
+                                ng-model="registerIte.regData.observatii_ite" ng-disabled="registerIte.disabled"
+                                autocomplete="off"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div style="width:8%;float: right;clear:right;margin: -1px 20px 20px 0;text-align: center;"
+                        novalidate>
+                        <p style="margin-bottom: 6px;color:#f00;font-weight: 600;font-size: 13px;">Taxa Urgenta</p>
+                        <select ng-disabled="registerIte.disabled" ng-model="registerIte.regData.ite_taxa_urgenta"
+                            ng-class="registerIte.regData.ite_taxa_urgenta" ng-init='registerIte.regData.ite_taxa_urgenta="nu"'
+                            style="height:34px;padding-left: 25px;width: 80px;border: 1px solid #cac3c373;
+                            "
+                            name="ite_taxa_urgenta">
+                            <option value="da">Da</option>
+                            <option selected value="nu">Nu</option>
+                        </select>
+                    </div>
+                    <div class="visible-print-block">
+                        <div style="width:13%;float: right;text-align: center;display: none;">
+                            <label for="Data_Estimativa">Data <br> Estimativa</label>
+                            <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="data_estimativa"
+                                autocomplete="off">
+                        </div>
+                        <div style="width:13%;float: right;text-align: center;">
+                            <label for="Data_Inregistrare">Data Inregistrare</label>
+                            <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="data_inregistrare"
+                                autocomplete="off">
+                        </div>
+                        <div style="width:13%;float: right;text-align: center;">
+                            <label style="width: 50%; margin: 0 auto; margin-top: 5px;" for="Serie">Serie ITE: </label>
+                            <input readonly type="text" style="text-align: center;" class="form-control" name="serie_ite"
+                                placeholder="-" ng-model="serie_ite" autocomplete="off">
+                        </div>
+                    </div>
+                    <div style="width:34%;display: table;clear:left;" class="pret_ite">
+                        <label for="Pret_Final">Pret (RON)</label>
+                        <input maxlength="43" type="text" class="form-control" name="pret_final" placeholder="-"
+                            ng-model="registerIte.regData.pret_final" ng-disabled="registerIte.disabled" autocomplete="off">
+                    </div>
+
+                    <div style="width: 48%;display: table;">
+                        <div style="width:70%;display: table;float:left;">
+                            <label for="Nume">Achitat avans (RON)</label>
+                            <input maxlength="33" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.avans"
+                                ng-disabled="registerIte.disabled" autocomplete="off">
+                        </div>
+                        <div style="width:30%;display: table;text-align: center;">
+                            <label for="Nume">la data de</label>
+                            <input style="text-align: center;border:none;" readonly type="text" class="form-control"
+                                name="nume" placeholder="-" ng-model="data_inregistrare" autocomplete="off">
+                        </div>
+                    </div>
+                    <div style="display: table;">
+                        <label for="Nume">Rest de plata la eliberarea produsului (RON)</label>
+                        <input disabled maxlength="26" type="text" class="form-control" name="nume" placeholder="-"
+                            ng-model="registerIte.regData.rest_plata" autocomplete="off">
+
+                    </div>
+                    <hr class="visible-print-block" style="clear:both;">
+
+                    <div style="width:100%;float:left;display: table;clear: both;margin-bottom:15px;" class="visible-print-block">
+                        <div style="width:40%;float:left;">
+                            <label for="Nume">Semnatura Pacient: </label>
+                            ...................................
+                        </div>
+
+                        <div style="width:40%;float:right;">
+                            <label for="Nume">Semnatura Audiolog: </label>
+                            ...................................
+
+                        </div>
+
+                    </div>
+
+                    <hr class="visible-print-block" style="clear:both;">
+
+                    <div style="text-align: center;width: 100%;margin-top:20px;" class="row visible-print-block">
+
+                        <div class="col-sm-12">
+                            <p>Se va lua in considerare termenul de productie de minim 4 zile lucratoare de la data
+                                intrarii in
+                                laborator.<br> Termenul de garantie pentru carcasa este de 6 luni de la data primirii
+                                de
+                                catre pacient.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerIte.errorMsg">
+                        <div id="regPacAlert" class=" alert-danger">{{ registerIte.errorMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerIte.successMsg">
+                        <div id="regPacAlert" class=" alert-success">{{ registerIte.successMsg }}</div>
+                    </div>
+
+                    <button style="float: right;clear:both;margin-bottom: 90px;" ng-show="registerIte.adauga"
+                        ng-disabled="registerIte.disabled" class="btn btn-info btn-sm no-print" type="submit">Adauga si
+                        Printeaza Fisa</button>
+                    <button type=button ng-click="print_ite()" ng-show="registerIte.print" style="float: right;clear:both;margin-bottom: 90px;"
+                        class="btn btn-danger btn-sm no-print">Printeaza</button>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="assets/js/audiograma.js"></script>

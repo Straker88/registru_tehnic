@@ -1,0 +1,489 @@
+<script>
+
+  $("textarea").on('keydown keypress keyup', function (e) {
+    if (e.keyCode == 8 || e.keyCode == 46) {
+      return true;
+    }
+    var maxRowCount = $(this).attr("rows") || 2;
+    var lineCount = $(this).val().split('\n').length;
+    if (e.keyCode == 13) {
+      if (lineCount == maxRowCount) {
+        return false;
+      }
+    }
+    var jsElement = $(this)[0];
+    if (jsElement.clientHeight < jsElement.scrollHeight) {
+      var text = $(this).val();
+      text = text.slice(0, -1);
+      $(this).val(text);
+      return false;
+    }
+  })
+
+
+  var needFirstPoint = true;
+  var lineTo = [{}];
+
+  function drawNextLine(ctx, x, y) {
+    if (needFirstPoint) {
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      needFirstPoint = false;
+
+    }
+    else {
+      ctx.beginPath();
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+  }
+
+  function drawNextLine1(ctx, x, y) {
+    if (needFirstPoint) {
+
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
+    else {
+      ctx.beginPath();
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+  }
+
+  $(document).ready(function () {
+    var canvas = $('#myCanvas').get(0);
+    if (!canvas.getContext) { return; }
+    var ctx = canvas.getContext('2d');
+    var ctx1 = canvas.getContext('2d');
+
+    var drawGrid = function (w, h, id) {
+      ctx.canvas.width = w;
+      ctx.canvas.height = h;
+      ctx.lineWidth = .1;
+
+      for (x = 15; x <= w; x += 60) {
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        for (y = 20; y <= h; y += 20) {
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+        }
+      }
+      ctx.stroke();
+
+    };
+
+    drawGrid(450, 280, "myCanvas");
+
+    var drawChart = function () {
+      ctx.arc(lineTo[lineTo.length - 1].x, lineTo[lineTo.length - 1].y, 6, 0, Math.PI * 2, false)
+      ctx.stroke();
+    }
+
+    drawChart();
+
+    document.getElementById('move').addEventListener('click', function () {
+
+      $('#myCanvas').on('click', function (e) {
+
+        var offset = $(this).offset();
+        var x = e.pageX - offset.left;
+        var y = e.pageY - offset.top;
+        ctx.strokeStyle = "red";
+        drawNextLine(ctx, x, y);
+
+        lineTo.push({ x: x, y: y });
+        drawChart();
+
+      });
+    });
+
+    document.getElementById('move1').addEventListener('click', function () {
+
+      $('#myCanvas').on('click', function (e) {
+
+        var offset = $(this).offset();
+        var x = e.pageX - offset.left;
+        var y = e.pageY - offset.top;
+        ctx.strokeStyle = "blue";
+        drawNextLine1(ctx, x, y);
+
+        lineTo.push({ x: x, y: y });
+        drawChart();
+
+      });
+    });
+
+  });
+  $("#clear").click(function () {
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, 380, 300);
+  });
+</script>
+
+<div class="page-header">
+  <ul class="nav nav-tabs no-print">
+    <li role="presentation" ng-click="registerOliva.servicePhase();" ng-class="serviceTab">
+      <a href="#">Service</a>
+    </li>
+    <li role="presentation" ng-click="registerOliva.olivaPhase();" ng-class="olivaTab">
+      <a href="#">Comanda Oliva</a>
+    </li>
+    <li role="presentation" ng-click="registerOliva.itePhase();" ng-class="iteTab">
+      <a href="#">Comanda ITE</a>
+    </li>
+  </ul>
+
+  <img class="visible-print-block" style="float:right;" src="/assets/img/clarfon-logo.jpg">
+  <h1 ng-show="registerOliva.phase1" style="display: inline-block;color:#337ab7;">Fisa Service Clarfon </h1>
+  <h1 ng-show="registerOliva.phase2" style="display: inline-block;color:#337ab7;">Fisa Comanda Oliva Clarfon </h1>
+  <h1 ng-show="registerOliva.phase3" style="display: inline-block;color:#337ab7;">Fisa Comanda ITE Clarfon </h1>
+
+  <span class="visible-print-block" style="float:left;margin-left: 10px;font-size:14px;">Operator de date cu caracter
+    personal
+    nr. 23594
+  </span>
+
+  <hr class="visible-print-block">
+  <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerOliva.errorMsg">
+    <div class="alertRed alert-danger">{{ registerOliva.errorMsg }}</div>
+  </div>
+
+  <h3 ng-show="registerOliva.phase1" class="visible-print-block" style="display: inline-block;color:#337ab7;">I.
+    Receptie
+    Service - {{main.username}}
+
+  </h3>
+  <h3 ng-show="registerOliva.phase2" class="visible-print-block" style="display: inline-block;color:#337ab7;">I.
+    Comanda
+    Oliva - Cabinet : {{main.username}}
+    <div ng-controller="registruCtrl" style="width:15%;display: table; float: right;margin-right:10px;margin-top:-20px;"
+      class="regOlivaForm">
+      <label for="Data Estimativa">Data Estimativa: </label>
+      <input readonly ng-init="data_estimativa" type="text" class="form-control" name="data_estimativa" ng-model="data_estimativa">
+    </div>
+
+    <div ng-controller="registruCtrl" style="width:15%;display: table; float: right;margin-right:10px;margin-top:-20px;"
+      class="regOlivaForm">
+      <label for="Data Inregistrare">Data Inregistrare: </label>
+      <input readonly ng-init="data_inregistrare" type="text" class="form-control" name="data_inregistrare" ng-model="data_inregistrare">
+    </div>
+
+  </h3>
+
+  <h3 ng-show="registerOliva.phase3" class="visible-print-block" style="display: inline-block;color:#337ab7;">I.
+    Comanda
+    ITE - {{main.username}}
+  </h3>
+
+
+</div>
+
+<div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerOliva.successMsg">
+  <div class="alertGreen alert-success">{{ registerOliva.successMsg }}</div>
+</div>
+
+<br>
+
+
+<form name="regOlivaForm" ng-show="registerOliva.phase2" ng-submit="registerOliva.regOliva(regData, regOlivaForm.$valid);">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div style="width:35%;float: left;margin-right: 10px;">
+        <label for="Nume">Nume Pacient: </label>
+        <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+          autocomplete="off">
+      </div>
+
+      <div style="width:44%;" class="regOlivaForm">
+        <label for="Telefon">Telefon: </label>
+        <input maxlength="26" type="text" class="form-control" name="telefon" placeholder="-" ng-model="registerOliva.regData.telefon"
+          autocomplete="off">
+      </div>
+
+      <div style="width:7%;float: left;margin-right: 20px;margin-top: -1px;">
+        <label for="Nume">Varsta: </label>
+        <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+          autocomplete="off">
+      </div>
+
+      <div style="margin-right: 10px;float: left; margin-top: 1px;">
+        <p style="margin-bottom: 5px;color:#337ab7;font-weight: 600;font-size: 13px;">Sex:</p>
+        <div class="optiuni" novalidate>
+          <select ng-model="registerOliva.regData.u_stanga" ng-class="registerOliva.regData.u_stanga" style="height:34px;"
+            name="u_stanga">
+            <option value="" selected disabled hidden>Alege</option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="width:70%;margin-right: 10px; margin-bottom: 10px;float: left;">
+        <label for="Nume">Adresa: </label>
+        <input maxlength="70" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+          autocomplete="off">
+      </div>
+
+      <!-- <hr class="visible-print-block"> -->
+
+      <!-- <div style="width:12%;float: right;margin:-2px 0 10px 0;">
+        <label for="Nume">Vent: (mm)</label>
+        <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+          autocomplete="off">
+      </div>
+
+      <div style="float:right;width:7%;margin-right: 45px;margin-bottom: 10px;">
+        <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;text-align:center">Culoare</p>
+        <div class="optiuni" novalidate>
+          <select ng-model="registerOliva.regData.u_stanga" ng-class="registerOliva.regData.u_stanga" style="height:34px;"
+            name="u_stanga">
+            <option value="" selected disabled hidden>Alege</option>
+            <option value="Bej">Bej</option>
+            <option value="Specifica">Specifica</option>
+          </select>
+        </div>
+      </div>
+      <div style="float:right;width:5%;margin-right: 35px;margin-bottom: 10px;">
+        <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;text-align:center">Carcasa</p>
+        <div class="optiuni" novalidate>
+          <select ng-model="registerOliva.regData.u_stanga" ng-class="registerOliva.regData.u_stanga" style="height:34px;"
+            name="u_stanga">
+            <option value="" selected disabled hidden>Alege</option>
+            <option value="ITC">ITC</option>
+            <option value="CIC">CIC</option>
+          </select>
+        </div>
+      </div> -->
+
+
+      <div style="width:20%; float:left;clear: both;">
+        <div style="width:100%;" class="regOlivaForm">
+          <label for="Denumire_Aparat">Model aparat auditiv: </label>
+          <input type="text" class="form-control" name="denumire_aparat" placeholder="-" ng-model="registerOliva.regData.denumire_aparat"
+            autocomplete="off">
+        </div>
+        <div style="width:100%;clear:both;" class="regOlivaForm">
+          <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Ureche protezata</p>
+          <div class="optiuni" novalidate>
+            <select ng-model="registerOliva.regData.u_stanga" ng-class="registerOliva.regData.u_stanga" style="height:34px;"
+              name="u_stanga">
+              <option value="" selected disabled hidden>Alege</option>
+              <option value="Stanga">Stanga</option>
+              <option value="Dreapta">Dreapta</option>
+              <option value="Bilateral">Bilateral</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="width:100%;clear:both;" class="regOlivaForm">
+          <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Oliva</p>
+          <div class="optiuni" novalidate>
+            <select ng-model="registerOliva.regData.u_stanga" ng-class="registerOliva.regData.u_stanga" style="height:34px;"
+              name="u_stanga">
+              <option value="" selected disabled hidden>Alege</option>
+              <option value="Elastica">Elastica</option>
+              <option value="Dura">Dura</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="width:100%;clear:both;" class="regOlivaForm">
+          <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Tip oliva</p>
+          <div class="optiuni" novalidate>
+            <select ng-model="registerOliva.regData.u_stanga" ng-class="registerOliva.regData.u_stanga" style="height:34px;"
+              name="u_stanga">
+              <option value="" selected disabled hidden>Alege</option>
+              <option value="Elastica">Canal</option>
+              <option value="Dura">Skelleton</option>
+              <option value="Dura">Full-concha</option>
+              <option value="Dura">Semi-concha</option>
+              <option value="Dura">liby horn</option>
+            </select>
+          </div>
+        </div>
+        <div style="width:55%;">
+          <label for="Nume">Vent: (mm)</label>
+          <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+            autocomplete="off">
+        </div>
+      </div>
+
+      <div style="width:70%;float:right;margin-right: 20px;">
+        <table class="tr_padding" style="float:right;margin-left: 5px;">
+
+          <tr>
+            <td>125</td>
+            <td>250</td>
+            <td>500</td>
+            <td style="padding-right:48px;">1k</td>
+            <td style="padding-right:45px;">2k</td>
+            <td style="padding-right:43px;">4k</td>
+            <td style="padding-right:41px;">8k</td>
+            <td style="padding-right:4px;">12k</td>
+          </tr>
+
+        </table>
+
+        <canvas id="myCanvas" width="400" height="280" style="float:right;clear: both;"></canvas>
+
+        <table class="tr_height" style="float:right; margin-right: 8px; margin-top: 12px;">
+          <tr>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td>30</td>
+          </tr>
+          <tr>
+            <td>40</td>
+          </tr>
+          <tr>
+            <td>50</td>
+          </tr>
+          <tr>
+            <td>60</td>
+          </tr>
+          <tr>
+            <td>70</td>
+          </tr>
+          <tr>
+            <td>80</td>
+          </tr>
+          <tr>
+            <td>90</td>
+          </tr>
+          <tr>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>110</td>
+          </tr>
+          <tr>
+            <td>120</td>
+          </tr>
+
+        </table>
+      </div>
+      <div style="float: right; clear: right;margin: 10px 120px 5px 0;">
+        <button class="btn btn-info btn-sm no-print" type="button" id=move1>Stanga</button>
+        <button class="btn btn-danger btn-sm no-print" type="button" id=move>Dreapta</button>
+        <button type="button" id=move1 class="no-print">Sterge</button>
+      </div>
+
+      <br>
+
+    </div>
+  </div>
+
+  <div style="width:16%;float:left;" class="visible-print-block">
+    <div style="width:100%;">
+      <label for="Nume">Predare: (data/ora) </label>
+      .........................
+    </div>
+
+    <div style="width:100%;margin-top:15px;">
+      <label for="Nume">Primire: (data/ora) </label>
+      .........................
+
+    </div>
+  </div>
+
+  <div style="width:20%;float:left;" class="visible-print-block">
+    <div style="width:100%;">
+      <label for="Nume">Audiolog:</label>
+      ...................................
+    </div>
+
+    <div style="width:100%;margin-top:15px;">
+      <label for="Nume">Audiolog: </label>
+      ...................................
+
+    </div>
+  </div>
+
+  <div style="width:20%;float:left;" class="visible-print-block">
+    <div style="width:100%;">
+      <label for="Nume">Tehnician: </label>
+      ...................................
+    </div>
+
+    <div style="width:100%;margin-top:15px;">
+      <label for="Nume">Tehnician: </label>
+      ...................................
+
+    </div>
+  </div>
+
+  <div style="width:37%;float:right;margin-right: 20px;">
+    <div style="width:100%;">
+      <label for="Nume">Observatii: </label>
+      <textarea maxlength="120" style="resize:none;min-height: 95px;border: 1px solid #000;" type="text" class="form-control"
+        name="nume" placeholder="-" ng-model="registerOliva.regData.nume" autocomplete="off"></textarea>
+    </div>
+  </div>
+
+  <div style="width:60%;float: left;">
+    <label for="Nume">Pret de lista /buc</label>
+    <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+      autocomplete="off">
+  </div>
+  <div style="width:60%;float: left;">
+    <label for="Nume">Pret final</label>
+    <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+      autocomplete="off">
+  </div>
+  <div style="width:45%;float: left;padding-top: 2px;">
+    <label for="Nume">Achitat avans</label>
+    <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+      autocomplete="off">
+  </div>
+  <div style="width:45%;float: left;">
+    <label for="Nume">la data de</label>
+    <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+      autocomplete="off">
+  </div>
+  <div style="width:45%;">
+    <label for="Nume">Rest de plata la eliberarea produsului</label>
+    <input type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.nume"
+      autocomplete="off">
+
+  </div>
+
+  <div style="width:100%;float:left;" class="visible-print-block">
+    <div style="width:40%;float:left;">
+      <label for="Nume">Semnatura Pacient: </label>
+      ...................................
+    </div>
+
+    <div style="width:40%;float:right;">
+      <label for="Nume">Semnatura Audiolog: </label>
+      ...................................
+
+    </div>
+  </div>
+  <hr class="visible-print-block">
+  <div style="border-top:1px solid #000;text-align: center;" class="row visible-print-block">
+    <div class="col-sm-12">
+      <p>se va lua in considerare termenul de productie de minim 4 zile lucratoare de la data intrarii in laborator.
+        <br> Termenul de garantie pentru olive este de 6 luni de la data primirii de catre pacient.</p>
+    </div>
+  </div>
+
+
+  <button style="float: right;clear: both;margin-bottom: 90px;" ng-disabled="registerOliva.disabled" class="btn btn-info btn-sm no-print"
+    type="submit">Adauga si Printeaza Fisa</button>
+
+</form>
